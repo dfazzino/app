@@ -1,0 +1,107 @@
+Opening LogFile
+Opening ScriptFile
+Starting to add variables!
+Starting to add events!
+~~~event1  test4~~
+	always
+		if  keydown down [1]
+		 move guy 0,3
+------------------------------------------------------------------
+~~~event2  test4~~
+		if  guy2 has item [2]
+		 start chat haveItem
+------------------------------------------------------------------
+~~~event3  test4~~
+		if  guy3 has item [3]
+		 start chat winGame
+------------------------------------------------------------------
+~~~event4  test4~~
+		if  guy3 notHas item [4]
+			and guy2 notHas item [5]
+		 start chat dontHaveItem
+------------------------------------------------------------------
+~~~event5  test4~~
+		 start chat giveItem
+------------------------------------------------------------------
+~~~event6~~
+		 addInv item guy2
+------------------------------------------------------------------
+~~~event7~~
+		 addInv item guy3 then start chat winning
+------------------------------------------------------------------
+~~~event8  test4~~
+		 start chat hasItem
+------------------------------------------------------------------
+~~~event9  test4~~
+		 start chat hasItem
+------------------------------------------------------------------
+~~~event10  test~~
+	always
+		if  keydown right [6]
+		 move guy 3,0
+------------------------------------------------------------------
+~~~event11  test~~
+	always
+		if  keydown left [7]
+		 move guy -3,0
+------------------------------------------------------------------
+~~~event12  test~~
+	always
+		if  keydown up [8]
+		 move guy 0,-3
+------------------------------------------------------------------
+~~~event13  start~~
+	always
+		if  var|start is 0 [9]
+		 start chat startGame then set start 1
+------------------------------------------------------------------
+Starting to add entities!
+~~~entity1  guy~~
+	at 100,100
+	draw type: lovedraw
+	box 1: x 120 y 120 w 50 h 50
+
+------------------------------------------------------------------
+~~~entity2  guy2~~
+	at 500,0
+	draw type: lovedraw
+	box 1: x 500 y 0 w 30 h 30
+
+------------------------------------------------------------------
+~~~entity3  guy3~~
+	at 400,200
+	draw type: lovedraw
+	box 1: x 400 y 200 w 30 h 30
+
+------------------------------------------------------------------
+~~~entity4  item1~~
+	at 400,400
+	draw type: lovedraw
+
+------------------------------------------------------------------
+Starting to add buttons!
+~~~entity5  none~~
+	at 0,0
+	draw type: lovedraw
+	box 1: x -40 y -40 w 40 h 40
+
+------------------------------------------------------------------
+~~~entity6  none~~
+	at 0,0
+	draw type: lovedraw
+	box 1: x 0 y 0 w 40 h 40
+
+------------------------------------------------------------------
+~~~entity7  none~~
+	at 0,0
+	draw type: lovedraw
+	box 1: x -40 y 0 w 40 h 40
+
+------------------------------------------------------------------
+~~~entity8  none~~
+	at 0,0
+	draw type: lovedraw
+	box 1: x 0 y -40 w 40 h 40
+
+------------------------------------------------------------------
+Starting to add chat nodes!
