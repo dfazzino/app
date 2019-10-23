@@ -5,7 +5,7 @@ require 'variables'
 require 'entities'
 require 'art'
 require 'utility'
-require 'fileutility'
+require 'fileutility'	
 require 'strong'
 anim8 = require 'anim8'
 nk = require 'nuklear'
@@ -15,7 +15,7 @@ require 'chats'
 require 'buttons'
 
 function love.load()
-  --if arg and arg[#arg] == "-debug" then require("mobdebug").start() end
+  if arg and arg[#arg] == "-debug" then require("mobdebug").start() end
 --	scriptData = http.get("http://pastebin.com/raw/hM9P7UhF")
 	require("love.screen") -- load the love.module
 	love.screen.init() -- Mandatory : it create the main screen.

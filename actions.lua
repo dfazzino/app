@@ -12,13 +12,13 @@ function initActions()
 end
 	
 
-
+ 
 function addActionToQueue(actions, waitAction) 
 
 	tempAction = {}
 	tempAction.actions = actions
 	tempAction.waitaction = waitAction
-	table.insert(actionQueue, tempAction)
+	table.insert(actionQueue, tempAction) 	
 	print("TESTTEST")
 	
 end	

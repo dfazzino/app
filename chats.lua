@@ -211,7 +211,12 @@ function loadChatNodes (chatNodeSection)
 						if words[i + 2] == "true" then chatnode.events = true 
 							else chatnode.events = false end
 					end
-				end
+          
+					if chatWords[2] == "time" then
+            local textWords = line:split("=")
+						chatnode.time = tonumber(textWords[2])
+					end
+        end
 			end
 			if word == "add" then
 				addChatNode()
@@ -256,14 +261,15 @@ function setupChat()
 		for i, cn in ipairs(chatnodes) do
 			if (cn.id:startsWith(tostring(currChatNode)) and cn.count <= count + 1) then
 				if cn.id == currChatNode then
-					line = {}
+					--This is the current text and responses being spoken
+          line = {}
 					line.text = cn.text
-					line.response = cn.response
-					table.insert(lines, line)	
+					line.response = cn.response          
+					table.insert(lines, line)
 					
 					checkEventsAfterChat = cn.events
 				else
-					
+          --These are responses the player can give  
 					segs = cn.id:split("_")
 					line ={}
 					line.text = cn.text
@@ -274,6 +280,7 @@ function setupChat()
 				end
 			end
 		end	
+
 			chatBubble = 1
 			chatResponses = {}
 			if lines[1].response ~= nil then
@@ -316,12 +323,12 @@ function drawChat ()
 				count = count + 1
 				setupChat()
 			end
+      
 
 		end
 		nk.windowEnd()
 	end
 	bubbleTimer()
-
 end
 
 
@@ -342,7 +349,9 @@ function drawBubbles()
 				love.graphics.setColor(255,0,0,255)
 				love.graphics.rectangle("fill", thisXY[1],thisXY[2], 200, 30,10,10,20)
 				love.graphics.setColor(0,0,0,255)
-				love.graphics.printf(line.text, thisXY[1], thisXY[2],200, "center")
+        templine = line.text:split("/")
+
+				love.graphics.printf(templine[1], thisXY[1], thisXY[2],200, "center")
 				love.graphics.setColor(255,255,255,255)
 			end
 		end 
@@ -355,7 +364,9 @@ function drawBubbles()
 				love.graphics.setColor(255,0,0,255)
 				love.graphics.rectangle("fill", thisXY[1],thisXY[2], 200, 30,10,10,20)
 				love.graphics.setColor(0,0,0,255)
-				love.graphics.printf(line, thisXY[1], thisXY[2],200, "center")
+        templine = line:split("/")
+
+				love.graphics.printf(templine[1], thisXY[1], thisXY[2],200, "center")
 				love.graphics.setColor(255,255,255,255)
 				end		
 		end
@@ -363,7 +374,17 @@ function drawBubbles()
 end
 
 function bubbleTimer()
-	if chatTimer < timer.getTime() - 2 then
+  local bubbleTimer = 3
+  if line ~= nil then
+    if chatBubble == 1 then
+        templine = line.text:split("/")
+        bubbleTimer = templine[2] or 3
+    elseif chatBubble >= 2 and chatResponses[chatBubble - 1] ~= nil then
+        templine = chatResponses[chatBubble - 1]:split("/")
+        bubbleTimer = templine[2] or 3      
+    end
+  end 
+	if chatTimer < timer.getTime() - bubbleTimer then
 		chatBubble = chatBubble + 1
 		chatTimer = timer.getTime()
 		end

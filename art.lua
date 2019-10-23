@@ -36,7 +36,7 @@ function drawEntities()
 		for i, entity in ipairs(entities) do
 			if entity.drawn == false and #entity.boxes > 0 and entity.visible ~= false then
 				xy = split(entity.boxes[1].xy, ",")
-				x = tonumber(xy[2])
+				x = tonumber(xy[1])
 				if entity.zCalc == true then entity.z = x  end
 				if entity.z == currentZ  or entity.z == nil then
 

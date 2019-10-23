@@ -7,7 +7,7 @@ event.deleteAfterRun = delete this event after its actions are successful
 event.resetAfterRun = reset this event after its actions are successful (only applies to timers)
 event.time = how much time should elapse before the event is triggered
 event.logic = any logic that should be true before the event will run its actions (see logic section).
-event.actions = events that will be executed if the logic is all true or if there is no logic
+event.actions = actions that will be executed if the logic is all true or if there is no logic
 
 SYSTEM VARIABLES:
 

@@ -94,7 +94,7 @@ function addButton()
 	
 	logFile:write("\n------------------------------------------------------------------\n")			
 
-end
+  end
 
 function doButtonPress()
 
