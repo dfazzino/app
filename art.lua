@@ -380,7 +380,7 @@ function drawAnimation (entity)
   if entity.standing ~= nil then
   entity.animation = animations[entity.standing]
   end
-  if entity.flux ~= nil then
+  if entity.flux ~= nil and entity.noAnimationOverride ~= true then
     if type(entity.flux.vars.x) ~= "number" then
       
       if entity.flux.vars.x.diff < 0 then
