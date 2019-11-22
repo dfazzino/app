@@ -65,6 +65,9 @@ function loadEntities (entitiesSection)
 					if entityWords[2] == "xy" then
 						entity.xy = words[i + 2]
 					end
+          if entityWords[2] == "feet" then
+						entity.feet = words[i + 2]
+					end
 					if entityWords[2] == "visible" then
 						entity.visible = words[i + 2]
 					end
@@ -76,7 +79,28 @@ function loadEntities (entitiesSection)
 						entity.inventory = words[i + 2]
 
 					end
-					
+					if entityWords[2] == "animation" then
+						entity.animation = words[i + 2]
+
+        end				
+        
+					if entityWords[2] == "walkLeft" then
+            walkWords = split(words[i + 2], ",")
+						entity.walkLeft = walkWords[1]
+						entity.walkLeftFlip = walkWords[2]
+            
+
+        end				
+        
+					if entityWords[2] == "walkRight" then
+						entity.walkRight= words[i + 2]
+
+					end				
+                  
+					if entityWords[2] == "standing" then
+						entity.standing = words[i + 2]
+
+					end	
 					if entityWords[2] == "actor" then
 						for i, e in ipairs(entities) do
 							e.actor = nil
@@ -165,6 +189,7 @@ function setupNewEntity ()
 	entity.xy = "0,0"
 	entity.visible = false
 	entity.inventory = "_"
+	entity.feet = "0,0"
 
 end
 
@@ -190,11 +215,12 @@ function checkPointingAt(entity, x ,y)
 end
 
 function getEntity(name)
-
-	for i, entity  in ipairs (entities) do
-	
-		if entity.name == name then
-			return entity
+  local myentities
+  myentities = currentScene.entities or entities
+  for i, myEntity  in ipairs (myentities) do
+    if myEntity.entity ~= nil then myEntity = myEntity.entity end
+		if myEntity.name == name then
+			return myEntity
 		end
 	end
 	
@@ -235,14 +261,14 @@ function analyzemap (ignore)
 			map[i][j] = 1
 		end
 	end
-	print("ignoring " .. ignore)
+--	print("ignoring " .. ignore)
 	for i, e in ipairs(entities) do
 		if not ignore:includes("_" .. e.name .. "_") then
 
 		-- if 1 == 0 then
 			for j, b in ipairs(e.boxes) do
 				if b.collision == true then
-					print(ignore, e.name)
+					--print(ignore, e.name)
 
 					x, y, right, bottom = splitBoxData(e, b)
 					x = math.floor(x / 30)
@@ -289,11 +315,12 @@ function tryToFindPath(entityName, toEntityName)
 end
 
 function pathFinding (command, ignore, retPlease)
-	print(ignore)
+--	print(ignore)
 	local pathEntity = {}
 	if command == nil then
 		if  actorEntity.name ~= nil then
 			pathEntity = actorEntity
+      
 			endx = math.floor(UI.mousex / 30)
 			endy = math.floor(UI.mousey / 30)
 		else
@@ -331,9 +358,10 @@ function pathFinding (command, ignore, retPlease)
 	-- Define start and goal locations coordinates
 		-- entity =  getEntity("guy2") or 0
 		xy =  pathEntity.xy:split(",")
-		startx =  math.floor(xy[1]/30)
+		feet =  pathEntity.feet:split(",")
+		startx =  math.floor(xy[1]/30) 
 		starty =  math.floor(xy[2]/30)	
-		print(xy[1], xy[2], endx, endy)
+		--print(xy[1], xy[2], endx, endy)
 	-- Calculates the path, and its length
 		local path, length = myFinder:getPath(startx, starty, endx, endy)
 		entityPath = ""
@@ -342,7 +370,7 @@ function pathFinding (command, ignore, retPlease)
 
 		  -- print(('Path found! Length: %.2f'):format(length))
 			for node, count in path:iter() do
-				print(('Step: %d - x: %d - y: %d'):format(count, node.x, node.y))
+--				print(('Step: %d - x: %d - y: %d'):format(count, node.x, node.y))
 				entityPath = entityPath .. "moveTo " .. pathEntity.name .. " " ..  math.floor(node.x * 30) .. "," .. math.floor(node.y * 30) .. "/"
 			end
 			
@@ -359,7 +387,7 @@ function pathFinding (command, ignore, retPlease)
 				event.logic = nil
 				event.trueactions = string.sub(entityPath, 1, -2)
 				event.delete = true
-				table.insert(events, event)
+				table.insert(currentScene.events, event)
 			end
 		end
 	end
@@ -388,7 +416,8 @@ function moveEntityTo(name, xy, actionWords)
 				entity.flux = flux.to(entity,dist, {x = tonumber(newxy[1]), y = tonumber(newxy[2])})
 				:ease("linear")
 				:oncomplete(function() 
-					entity.flux:stop() 
+					entity.flux:stop()
+          entity.flux = nil
 					checkActionQueue(entity.currAction)
 				end)
 	end
@@ -434,8 +463,8 @@ function moveEntity(name, xy1, entity, xy2)
 			end
 		end
 		if cantMove ~= true then 
+      x = entityxy[1] + xyIn[1]		
 			y = entityxy[2] + xyIn[2] 
-			x = entityxy[1] + xyIn[1]		
 			entity.xy = x .. "," .. y
 			for i, box in ipairs(entity.boxes) do
 	
@@ -485,7 +514,12 @@ function getPointingAt(value)
 
 	retValue = ""
 	local e
-	for i, entity in ipairs(entities) do
+	for i, sceneEntity in ipairs(currentScene.entities) do
+  if sceneEntity.entity ~= nil then 
+    entity = sceneEntity.entity
+  else
+    entity = sceneEntity
+  end
 		if entity.visible ~= false then
 			for i, box in ipairs(entity.boxes) do
 				entityxy = entity.xy:split(",")

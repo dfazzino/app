@@ -1,0 +1,472 @@
+SCENE SECTION.
+
+new scene
+scene.name = all
+scene.events + movedown
+scene.events + moveup
+scene.events + moveleft
+scene.events + moveright
+
+add
+
+new scene
+scene.name = firstscene
+scene.entities + guy (500,250)
+scene.entities + guy2 (300,200)
+scene.entities + guy3 (500,200)
+scene.events + StartChatGiveItem,StartChatDontHaveItem,StartChatWinGame,StartChatHaveItem
+scene.background = 37.jpg
+add
+
+new scene
+scene.name = secondscene
+scene.entities + guy (100, 210)
+scene.events + StartChatGiveItem
+scene.events + StartChatDontHaveItem
+scene.events + StartChatWinGame
+scene.events + StartChatHaveItem
+scene.door + secondscene,1,1,15,100, wineglass
+scene.gradientsize = 80%
+
+add
+
+END SCENES.
+
+ART SECTION.
+
+new spritesheet 
+spritesheet.name = items
+spritesheet.file = genericItems_spritesheet_colored.png
+spritesheet.xml = genericItems_spritesheet_colored.xml
+add
+
+new gridsheet 
+gridsheet.name = robot
+gridsheet.file = character_robot_sheet.png
+gridsheet.framewidth = 96
+gridsheet.frameheight = 128
+gridsheet.left = 0
+gridsheet.top = 0
+gridsheet.border = 4
+gridsheet.xoffset = -25
+gridsheet.yoffset = -37
+add
+
+new gridsheet 
+gridsheet.name = girl
+gridsheet.file = character_femalePerson_sheet.png
+gridsheet.framewidth = 96
+gridsheet.frameheight = 128
+gridsheet.left = 0
+gridsheet.top = 0
+gridsheet.border = 10
+gridsheet.xoffset = -25
+gridsheet.yoffset = -37
+add
+
+new gridsheet 
+gridsheet.name = dude
+gridsheet.file = character_maleAdventurer_sheet.png
+gridsheet.framewidth = 96
+gridsheet.frameheight = 128
+gridsheet.left = 0
+gridsheet.top = 0
+gridsheet.border = 0
+gridsheet.xoffset = -25
+gridsheet.yoffset = -37
+add
+
+new image
+image.name = wineglass
+image.sheet = items
+image.id = genericItem_color_041.png
+add
+
+new image
+image.name = wineglass
+image.sheet = items
+image.id = genericItem_color_012.png
+add
+
+new animation
+animation.name = dudewalkingleft
+animation.sheet = dude
+animation.x1 = 1-8
+animation.y1 = 5-5
+animation.rate = 0.125
+animation.flip = flipH
+add
+
+new animation
+animation.name = dudewalking
+animation.sheet = dude
+animation.x1 = 1-8
+animation.y1 = 5-5
+animation.rate = 0.125
+add
+
+new animation
+animation.name = dudestanding
+animation.sheet = dude
+animation.x1 = 1-1
+animation.y1 = 1-1
+animation.rate = 0.125
+add
+
+new animation
+animation.name = girlwalking
+animation.sheet = girl
+animation.x1 = 1-8
+animation.y1 = 5-5
+animation.rate = 0.125
+add
+
+new animation
+animation.name = girlwalkingleft
+animation.sheet = girl
+animation.x1 = 1-8
+animation.y1 = 5-5
+animation.rate = 0.125
+animation.flip = flipH
+add
+
+new animation
+animation.name = girlstanding
+animation.sheet = girl
+animation.x1 = 1-1
+animation.y1 = 1-1
+animation.rate = 0.125
+add
+
+
+new animation
+animation.name = robotwalking
+animation.sheet = robot
+animation.x1 = 1-8
+animation.y1 = 5-5
+animation.rate = 0.125
+add
+
+new animation
+animation.name = robotstanding
+animation.sheet = robot
+animation.x1 = 1-1
+animation.y1 = 1-1
+animation.rate = 0.125
+add
+
+END ART.
+
+
+
+EVENTS SECTION.
+ 
+new event as always
+	event.name = movedown
+	event.logic = keydown down
+	event.actions = move guy 0,3
+add
+
+new event as always
+	event.name = moveright	
+	event.logic = keydown right
+	event.actions = move guy 3,0 
+add
+	
+new event as always
+	event.name = moveleft
+	event.logic = keydown left
+	event.actions = move guy -3,0 
+add
+
+new event as always
+	event.name = moveup
+	event.logic = keydown up
+	event.actions = move guy 0,-3
+add
+
+new event as playeraction (guy2 talkTo guy3)
+	event.name = StartChatHaveItem
+	event.logic = guy2 has item
+	event.actions = start chat haveItem
+add
+
+
+new event as playeraction (guy2 talkTo guy3)
+	event.name = StartChatWinGame
+	event.logic = guy3 has item
+	event.actions = start chat winGame
+add
+
+new event as playeraction (guy2 talkTo guy3)
+	event.name = StartChatDontHaveItem
+	event.logic = guy3 notHas item and guy2 notHas item
+	event.actions = start chat dontHaveItem
+add
+
+new event as playeraction (guy2 talkTo guy)
+	event.name = StartChatGiveItem
+	event.actions = start chat giveItem
+add
+
+new event as chatevent (giveItem_takeItem)
+	event.actions = addInv item guy2
+add
+
+new event as chatevent (haveItem_giveItemToGuy3)
+	event.actions = addInv item guy3 then start chat winning
+add
+2
+
+
+new event as playeraction (guy2 push guy3)
+	event.name = test4
+	event.actions = start chat hasItem
+add
+
+new event as playeraction (guy2 zimva guy3)
+	event.name = test4
+	event.actions = start chat hasItem
+add
+
+new event as always
+	
+	event.name = start
+	
+	event.logic = var|start is 0
+
+	event.actions = start chat startGame then set start 1 
+add
+
+END EVENTS.
+
+
+ENTITIES SECTION.
+new entity
+	entity.name = guy
+	entity.drawType = anim8
+	entity.animation = robotstanding
+	entity.cells = 1,1,2,1,5,1,.10
+	entity.zCalc = true
+	entity.xy = 100,100
+	entity.visible = true
+  entity.boxes + -30,-70,50,70
+  entity.boxes + -30,-20,50,30,collision
+	entity.feet = 30,128
+	entity.talkToLocation = 150,50
+	
+	entity.pushLocation = -50,50
+	
+	entity.zimvaLocation = 100,50
+
+
+add entity
+
+new entity
+	entity.name = guy2
+	entity.drawType = anim8
+	entity.cells = 1,1,2,1,5,1,.10
+	entity.zCalc = true
+	entity.xy = 500,150
+	entity.visible = true
+	entity.boxes + -30,-70,50,70
+  entity.boxes + -30,-20,50,30,collision
+	entity.animation = dudestanding
+	entity.walkRight = dudewalking
+	entity.walkLeft = dudewalkingleft
+	entity.standing = dudestanding
+	entity.talkToLocation = -20,20
+	entity.feet = 30,9
+  
+add entity
+
+new entity
+	entity.name = guy3
+	entity.drawType = anim8
+	entity.cells = 1,1,2,1,5,1,.10
+	entity.zCalc = true
+	entity.xy = 400,200
+	entity.visible = true
+	entity.boxes + -30,-70,50,70
+  entity.boxes + -30,-20,50,30,collision
+	entity.talkToLocation = 50,50
+	entity.pushLocation = -50,50
+	entity.zimvaLocation = 100,50
+	entity.animation = girlstanding
+	entity.walkRight = girlwalking
+	entity.walkLeft = girlwalkingleft
+	entity.standing = girlstanding
+	entity.actor = true
+  
+add entity
+
+new entity
+	entity.name = item1
+	entity.drawType = lovedraw
+	entity.xy = 400,400
+	entity.visible = false
+
+add entity
+
+
+END ENTITIES.
+
+
+PLAYER ACTION BUTTONS SECTION.
+
+new button
+	button.name = talk
+	button.action = talkTo
+	button.boxes + -40,-40,40,40
+	button.drawType = lovedraw
+	button.visible = false
+	button.text = talk
+add button
+
+new button
+	button.name = push
+	button.action = push
+	button.boxes + 0,0,40,40
+	button.drawType = lovedraw
+	button.visible = false
+	button.text = push
+add button
+
+new button
+	button.name = pull
+	button.action = pull
+	button.boxes + -40,0,40,40
+	button.drawType = lovedraw
+	button.visible = false
+	button.text = pull
+add button
+
+new button
+	button.name = zimva
+	button.action = zimva
+	button.boxes + 0,-40,40,40
+	button.drawType = lovedraw
+	button.visible = false
+	button.text = zimva
+add button
+
+new button
+	button.name = haha
+	button.action = haha
+	button.boxes + -40,-80,40,40
+	button.drawType = lovedraw
+	button.visible = false
+	button.text = haha
+add button
+END PLAYER ACTION BUTTONS.
+
+
+CHAT SECTION.
+
+new chatnode
+chatnode.id = startGame
+chatnode.text = guy2: Welcome to the game I made, I hope it goes ok.
+
+add chatnode
+
+new chatnode
+chatnode.id = winGame
+chatnode.text = guy2: I don't have that item you're looking for.../6
+chatnode.response = guy3: Dude you gave it to me already.  You won--- stop being so stressed out all the time.
+
+add chatnode
+new chatnode
+chatnode.id = dontHaveItem
+chatnode.text = guy2: I don't have that item you're looking for.../4
+chatnode.response = guy3: well, get it from that other box./4|guy2: oh, ok.  that shouldn't be too hard.
+
+add chatnode
+
+new chatnode
+chatnode.id = haveItem
+chatnode.text = guy2: I have that item you're looing for!
+chatnode.response = guy3: awesome, will you give it to me?
+
+add chatnode
+
+new chatnode
+chatnode.id = haveItem_giveItemToGuy3
+chatnode.text = guy2: Ok, here you go.
+chatnode.checkEventsAfterChat = true
+chatnode.time = 5
+add chatnode
+
+new chatnode
+chatnode.id = winning
+chatnode.text = guy3: hey thanks, I guess you win or something.
+add chatnode
+
+new chatnode
+chatnode.id = haveItem_keepItem
+chatnode.text = guy2: You can't have it, why would I give this to you I don't even know you.
+chatnode.response = guy3:Ok.  That sucks, I guess you don't win.
+add chatnode
+
+new chatnode
+chatnode.id = giveItem
+chatnode.text = guy2: hi, what are you doing on this screen?
+chatnode.response = guy: I have an item I need you to give that other box.|guy3: yeah bring it to me!|guy: select the "takeItem" option from the list.
+add
+
+new chatnode
+chatnode.id = giveItem_takeItem
+chatnode.text = guy2: sure I'll take the item!
+chatnode.response = guy: oh that's great. here!
+chatnode.checkEventsAfterChat = true
+add
+
+END CHAT.
+
+
+BACK UP EVENTS.
+new event as playerAction(entity1 get entity2)
+	event.name = test 
+	event.resetAfterRun = true
+	event.actions = start chat hasItem
+	event.logic = guy has item
+	event.falseactions = start chat noItem
+add event test
+
+new event as onClick
+	event.name = test 
+	event.resetAfterRun = true
+	event.logic = pointing at guy2 and guy has item
+	event.actions = start chat hasItem
+	event.falseactions = start chat noItem
+add event test
+
+new event as onClick
+	event.name = test 
+	event.resetAfterRun = true
+	event.logic = pointing at *
+	event.actions = set test pointingAt|name
+add event test
+
+new event as onClick
+	event.name = test2
+	event.resetAfterRun = true
+	event.logic = pointing at nothing
+	event.actions = set test2 mousePos 
+	event.falseactions = addInv item guy
+add timer test
+
+new event as onClick
+	event.name = test2
+	event.resetAfterRun = true
+	event.logic = pointing at nothing and keydown up
+	event.actions = set test2 mousePos then moveTo variable|test 300,300 / moveTo variable|test 100,500 / moveTo variable|test 20,205 / moveTo variable|test variable|test2
+	event.falseactions = set test2 mousePos then moveTo variable|test variable|test2
+add timer test
+
+new event as chataction
+	event.name = test3
+	event.resetAfterRun = true
+	event.actions = move variable|test 100,10
+	
+add timer test
+

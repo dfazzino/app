@@ -6,6 +6,7 @@ require 'entities'
 require 'art'
 require 'utility'
 require 'fileutility'	
+require 'scenes'	
 require 'strong'
 anim8 = require 'anim8'
 nk = require 'nuklear'
@@ -13,9 +14,14 @@ flux = require 'flux'
 require 'ui'
 require 'chats'
 require 'buttons'
+xml2lua = require ('xml2lua')
+
 
 function love.load()
+
   if arg and arg[#arg] == "-debug" then require("mobdebug").start() end
+	initScenes()
+
 --	scriptData = http.get("http://pastebin.com/raw/hM9P7UhF")
 	require("love.screen") -- load the love.module
 	love.screen.init() -- Mandatory : it create the main screen.
@@ -38,11 +44,18 @@ function love.load()
 	loadScript()
 	initActions()
 	setupChat()
-	
+  tempfile = io.open("genericItems_spritesheet_colored.xml", "r")
+  xmldata = ""
+ 	repeat
+		line = tempfile:read()
+		if line ~= nil then xmldata = xmldata .. line .. "\n" end
+	until line == nil
+img = love.graphics.newImage("genericItems_spritesheet_colored.png")
 --	local xml = require("slaxml").newParser()
 	
 --	xml:loadFile('genericItems_spritesheet_colored.xml', base)	
 --	print(xml.test["@name"])
+  loadScene("firstscene")
 end
 
 
@@ -53,6 +66,8 @@ function loadScript ()
 	local buttonsSection = ""
 	local eventsSection = ""
 	local chatNodeSection = ""
+	local sceneSection = ""
+	local artNodeSection = ""
 	
 	for line in scriptData:lines() do
 		
@@ -71,12 +86,21 @@ function loadScript ()
 		end		
 		if line == "CHAT SECTION." then
 			section = "chat"
-		end				
-		if line == "END VARIABLES." or
+		end		
+		if line == "ART SECTION." then
+			section = "art"
+		end					
+    if line == "SCENE SECTION." then
+			section = "scenes"
+		end					
+    
+    if line == "END VARIABLES." or
 			line == "END ENTITIES." or 
 			line == "END PLAYER ACTION BUTTONS." or
 			line == "END CHAT." or
-			line == "END EVENTS." then
+      line == "END ART." or
+			line == "END EVENTS." or
+			line == "END SCENES." then
 			section = ""
 		end
 		if section == "events" then
@@ -94,14 +118,20 @@ function loadScript ()
 		if section == "chat" then
 			chatNodeSection = chatNodeSection .. line .. "\n"
 		end
-		
+		if section == "art" then
+			artNodeSection = artNodeSection .. line .. "\n"
+		end		
+    if section == "scenes" then
+			sceneSection = sceneSection .. line .. "\n"
+		end		
 	end
-	
+	loadArt(artNodeSection.. "END ART.")
 	loadVariables(variablesSection .. "END VARIABLES.") 
 	loadEvents(eventsSection .. "END EVENTS.")
 	loadEntities(entitiesSection .. "END ENTITIES.")
 	loadButtons(buttonsSection .. "END BUTTONS.")
 	loadChatNodes(chatNodeSection.. "END CHAT.")
+	loadScenes(sceneSection.. "END SCENES.")
 
 end
 
@@ -180,14 +210,18 @@ function love.update(dt)
 	drawChat()
 	updateXYtoFlux()
 	nk.frameEnd()
+	for i, animation in pairs(animations)  do
+    animation.animation:update(dt)
+  end
 end
 
 function love.draw()
 	nk.draw()
+  drawBackground()
 	drawUI()
 	drawEntities()
 	drawBubbles()
 	drawInformation()
-	
-	
+--  drawImages()
+
 end

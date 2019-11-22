@@ -10,7 +10,7 @@ function OpenScriptFile()
 
 	scriptData = ""
     logFile:write("Opening ScriptFile\n")	
-    scriptFile = io.open("c:/scriptfile.txt", "r")
+    scriptFile = io.open("scriptfile.txt", "r")
 	repeat
 		line = scriptFile:read()
 		if line ~= nil then scriptData = scriptData .. line .. "\n" end

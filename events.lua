@@ -76,7 +76,7 @@ function loadEvents(eventsSection)
 				end
 
 			end
-			
+
 			if word ~= nil then
 				word = word:strip()
 				--debug.debug()
@@ -275,7 +275,7 @@ end
 
 function checkEvents (eventType, thisPath)
 
-	for i, event in ipairs(events) do
+	for i, event in ipairs(currentScene.events) do
 
 		--if event.hidden ~= true then
 			if event.onClick == true and eventType == "click" then
@@ -346,9 +346,9 @@ end
 function deleteEvents()
 
 	i = 1
-	while i <= #events do
-		if events[i].deleted == true then
-			table.remove(events, i)
+	while i <= #currentScene.events do
+		if currentScene.events[i].deleted == true then
+			table.remove(currentScene.events, i)
 		else
 			i=i+1
 		end
@@ -359,7 +359,7 @@ end
 
 function checkTimers()
 
-	for i, event in ipairs(events) do
+	for i, event in ipairs(currentScene.events) do
 	
 		if event.time ~= nil and event.timeStart ~= nil then
 			if timer.getTime() > (event.timeStart + event.time) then
@@ -379,12 +379,24 @@ function checkTimers()
 		end
 	
 	end
-	for i, event in ipairs(events) do
-		if event.remove == true then table.remove(events, i) end
+	for i, event in ipairs(currentScene.events) do
+		if event.remove == true then table.remove(currentScene.events, i) end
 	end
 	
 end
 
+function getEvent(name)
+
+	for i, event in ipairs (events) do
+	
+		if event.name == name then
+			return event
+		end
+	end
+	
+	return "none"
+
+end
 
 function checkChatEvent(eventID)
 
@@ -393,7 +405,7 @@ function checkChatEvent(eventID)
 		
 		checkLogic(event.logic, event.trueactions, event.falseactions)
 		
-		else
+  else
 			doAction(event.trueactions)
 	end	
 

@@ -5,11 +5,11 @@ function showButtons(show)
 	for i, b in ipairs(entities) do	
 		if b.action ~= nil then
 			if show == true then
-				b.visible = true
+				b.visible = "true"
 				moveEntityDirect(nil, b, UI.mousex .. "," .. UI.mousey)
 
 			else
-				b.visible = false
+				b.visible = "false"
 			end
 		end
 		
@@ -51,10 +51,14 @@ function loadButtons (buttonsSection)
 					if entityWords[2] == "xy" then
 						entity.xy = words[i + 2]
 					end
-
 					if entityWords[2] == "text" then
 						entity.text = words[i + 2]
 					end
+          
+					if entityWords[2] == "visible" then
+						entity.visible = words[i + 2]
+					end
+          
 					if entityWords[2] == "boxes" then
 						boxWords = words[i + 2]:split(",")
 						
@@ -72,7 +76,7 @@ function loadButtons (buttonsSection)
 				end
 			end
 			if word == "add" then
-				addEntity()
+				addButton()
 				logFile:flush()
 			end
 		end
@@ -80,7 +84,7 @@ function loadButtons (buttonsSection)
 end
 
 function addButton()
-
+  entity.z = 9999
 	table.insert(entities, entity)
 	logFile:write("~~~button" .. table.getn(entities))
 	if entity.name ~= nil then logFile:write("  " .. entity.name) end
@@ -106,6 +110,7 @@ function doButtonPress()
 			local thisPath = moveToEntity(actorEntity, acteeEntity, b.action)
 			action = actorEntity.name .. ' ' .. b.action .. ' ' .. acteeEntity.name	
 			checkEvents(action, thisPath)
+      
 			return true
 		end		
 	end

@@ -1,54 +1,55 @@
 Opening LogFile
 Opening ScriptFile
+Starting to add art!
 Starting to add variables!
 Starting to add events!
-~~~event1  test4~~
+~~~event1  movedown~~
 	always
 		if  keydown down [1]
 		 move guy 0,3
 ------------------------------------------------------------------
-~~~event2  test4~~
-		if  guy2 has item [2]
-		 start chat haveItem
-------------------------------------------------------------------
-~~~event3  test4~~
-		if  guy3 has item [3]
-		 start chat winGame
-------------------------------------------------------------------
-~~~event4  test4~~
-		if  guy3 notHas item [4]
-			and guy2 notHas item [5]
-		 start chat dontHaveItem
-------------------------------------------------------------------
-~~~event5  test4~~
-		 start chat giveItem
-------------------------------------------------------------------
-~~~event6~~
-		 addInv item guy2
-------------------------------------------------------------------
-~~~event7~~
-		 addInv item guy3 then start chat winning
-------------------------------------------------------------------
-~~~event8  test4~~
-		 start chat hasItem
-------------------------------------------------------------------
-~~~event9  test4~~
-		 start chat hasItem
-------------------------------------------------------------------
-~~~event10  test~~
+~~~event2  moveright~~
 	always
-		if  keydown right [6]
+		if  keydown right [2]
 		 move guy 3,0
 ------------------------------------------------------------------
-~~~event11  test~~
+~~~event3  moveleft~~
 	always
-		if  keydown left [7]
+		if  keydown left [3]
 		 move guy -3,0
 ------------------------------------------------------------------
-~~~event12  test~~
+~~~event4  moveup~~
 	always
-		if  keydown up [8]
+		if  keydown up [4]
 		 move guy 0,-3
+------------------------------------------------------------------
+~~~event5  StartChatHaveItem~~
+		if  guy2 has item [5]
+		 start chat haveItem
+------------------------------------------------------------------
+~~~event6  StartChatWinGame~~
+		if  guy3 has item [6]
+		 start chat winGame
+------------------------------------------------------------------
+~~~event7  StartChatDontHaveItem~~
+		if  guy3 notHas item [7]
+			and guy2 notHas item [8]
+		 start chat dontHaveItem
+------------------------------------------------------------------
+~~~event8  StartChatGiveItem~~
+		 start chat giveItem
+------------------------------------------------------------------
+~~~event9~~
+		 addInv item guy2
+------------------------------------------------------------------
+~~~event10~~
+		 addInv item guy3 then start chat winning
+------------------------------------------------------------------
+~~~event11  test4~~
+		 start chat hasItem
+------------------------------------------------------------------
+~~~event12  test4~~
+		 start chat hasItem
 ------------------------------------------------------------------
 ~~~event13  start~~
 	always
@@ -58,20 +59,23 @@ Starting to add events!
 Starting to add entities!
 ~~~entity1  guy~~
 	at 100,100
-	draw type: lovedraw
-	box 1: x 120 y 120 w 50 h 50
+	draw type: anim8
+	box 1: x 70 y 30 w 50 h 70
+	box 2: x 70 y 80 w 50 h 30
 
 ------------------------------------------------------------------
 ~~~entity2  guy2~~
-	at 500,0
-	draw type: lovedraw
-	box 1: x 500 y 0 w 30 h 30
+	at 500,150
+	draw type: anim8
+	box 1: x 470 y 80 w 50 h 70
+	box 2: x 470 y 130 w 50 h 30
 
 ------------------------------------------------------------------
 ~~~entity3  guy3~~
 	at 400,200
-	draw type: lovedraw
-	box 1: x 400 y 200 w 30 h 30
+	draw type: anim8
+	box 1: x 370 y 130 w 50 h 70
+	box 2: x 370 y 180 w 50 h 30
 
 ------------------------------------------------------------------
 ~~~entity4  item1~~
@@ -80,34 +84,30 @@ Starting to add entities!
 
 ------------------------------------------------------------------
 Starting to add buttons!
-~~~entity5  none~~
-	at 0,0
+~~~button5  none~~
 	draw type: lovedraw
 	box 1: x -40 y -40 w 40 h 40
 
 ------------------------------------------------------------------
-~~~entity6  none~~
-	at 0,0
+~~~button6  none~~
 	draw type: lovedraw
 	box 1: x 0 y 0 w 40 h 40
 
 ------------------------------------------------------------------
-~~~entity7  none~~
-	at 0,0
+~~~button7  none~~
 	draw type: lovedraw
 	box 1: x -40 y 0 w 40 h 40
 
 ------------------------------------------------------------------
-~~~entity8  none~~
-	at 0,0
+~~~button8  none~~
 	draw type: lovedraw
 	box 1: x 0 y -40 w 40 h 40
 
 ------------------------------------------------------------------
-~~~entity9  none~~
-	at 0,0
+~~~button9  none~~
 	draw type: lovedraw
 	box 1: x -40 y -80 w 40 h 40
 
 ------------------------------------------------------------------
 Starting to add chat nodes!
+Starting to add scenes!

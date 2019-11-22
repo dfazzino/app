@@ -27,9 +27,8 @@ end
 function checkActionQueue(actionWords, cancelActions)
 	for i, a in ipairs(actionQueue) do
 			
-	print(actionWords[1], actionWords[2], a.waitaction[1], a.waitaction[2])
 		if a.waitaction == actionWords or (a.waitaction[1] == actionWords[1] and a.waitaction[2] == actionWords[2] and cancelActions == true) then
-			if cancelActions ~= true then doAction(a.actions,nil, dt) else  print("CANCEL") end
+			if cancelActions ~= true then doAction(a.actions,nil, dt)  end
 			a.remove = true
 			if cancelActions ~= true then break end
 		end
