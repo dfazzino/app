@@ -378,9 +378,9 @@ function drawAnimation (entity)
 --    size = .30 end
   love.graphics.getHeight()
   if entity.standing ~= nil then
-  entity.animation = entity.standing
+  entity.animation = animations[entity.standing]
   end
-  if entity.flux ~= nil then
+  if entity.flux ~= nil and entity.noAnimationOverride ~= true then
     if type(entity.flux.vars.x) ~= "number" then
       
       if entity.flux.vars.x.diff < 0 then
@@ -402,8 +402,9 @@ function drawAnimation (entity)
     end
 
   end 
+  --All animations properties should now refer to the animation itself, not the animation name.
 
-  animations[entity.animation].animation:draw(sheets[animations[entity.animation].sheet].file, tonumber(xy[1]) + sheets[animations[entity.animation].sheet].xoffset, tonumber(xy[2]) + sheets[animations[entity.animation].sheet].yoffset, 0, 1 , 1 )
+  entity.animation.animation:draw(sheets[entity.animation.sheet].file, tonumber(xy[1]) + sheets[entity.animation.sheet].xoffset, tonumber(xy[2]) + sheets[entity.animation.sheet].yoffset, 0, 1 , 1 )
 --  end
 
 --  entity.animate:draw(image30, tonumber(xy[1]), tonumber(xy[2]), nil, 1,1)
