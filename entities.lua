@@ -188,6 +188,7 @@ function setupNewEntity ()
 	entity.visible = false
 	entity.inventory = "_"
 	entity.feet = "0,0"
+  entity.noAnimationOverride = false
 
 end
 
