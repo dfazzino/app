@@ -78,22 +78,20 @@ function loadEntities (entitiesSection)
 					if entityWords[2] == "inventory" then
 						entity.inventory = words[i + 2]
 
-					end
+          end
+          --All animations properties should now refer to the animation itself, not the animation name.
 					if entityWords[2] == "animation" then
-						entity.animation = words[i + 2]
+						entity.animation = animations[words[i + 2]]
 
-        end				
+          end				
         
 					if entityWords[2] == "walkLeft" then
-            walkWords = split(words[i + 2], ",")
-						entity.walkLeft = walkWords[1]
-						entity.walkLeftFlip = walkWords[2]
-            
-
-        end				
+						entity.walkLeft = animations[words[i + 2]]
+          end				
         
 					if entityWords[2] == "walkRight" then
-						entity.walkRight= words[i + 2]
+            walkWords = animations[split(words[i + 2], ",")]
+						entity.walkRight = animations[words[i + 2]]
 
 					end				
                   
