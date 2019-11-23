@@ -308,7 +308,7 @@ new entity
   entity.boxes + 0,0,450,475,collision
   entity.boxes + 450,0,120,340,collision
   entity.boxes + 570,0,200,340,collision
-	entity.visible = false
+	entity.visible = false5
 add entity
 new entity
 	entity.name = item1

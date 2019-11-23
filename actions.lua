@@ -19,7 +19,6 @@ function addActionToQueue(actions, waitAction)
 	tempAction.actions = actions
 	tempAction.waitaction = waitAction
 	table.insert(actionQueue, tempAction) 	
-	print("TESTTEST")
 	
 end	
 	
