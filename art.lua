@@ -340,7 +340,7 @@ function drawASquare(myEntity)
   for i, box in ipairs(myEntity.boxes) do
     if box.color ~= nil then 
       rgb = box.color:split(",")
-      love.graphics.setColor(rgb[1] or 255,rgb[2] or 255 ,rgb[3] or 255,rgb[4] or 255 )			
+      love.graphics.setColor(rgb[1] or 255,rgb[2] or 255 ,rgb[3] or 255,rgb[4] or 255, 150 )			
     end
 
     xy = {}
@@ -356,7 +356,7 @@ function drawASquare(myEntity)
     love.graphics.setColor(255,255, 255, 255 )
     if myEntity.text ~= nil then
       love.graphics.setColor(0,0, 0, 255 )
---      love.graphics.print(myEntity.text, xy[1] + 5, xy[2] + 5)
+      love.graphics.print(myEntity.text, xy[1] + 5, xy[2] + 5)
       love.graphics.setColor(255,255, 255, 255)
     end
 
