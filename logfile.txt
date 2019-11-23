@@ -78,20 +78,17 @@ Starting to add entities!
 	box 2: x 370 y 180 w 50 h 30
 
 ------------------------------------------------------------------
-~~~entity4  wall1~~
-	at 30,30
-	draw type: lovedraw
-	box 1: x 30 y 30 w 450 h 475
-	box 2: x 480 y 30 w 120 h 340
-	box 3: x 600 y 30 w 200 h 340
-
-------------------------------------------------------------------
-~~~entity5  item1~~
+~~~entity4  item1~~
 	at 400,400
 	draw type: lovedraw
 
 ------------------------------------------------------------------
 Starting to add buttons!
+~~~button5  none~~
+	draw type: lovedraw
+	box 1: x 1 y 400 w 20 h 150
+
+------------------------------------------------------------------
 ~~~button6  none~~
 	draw type: lovedraw
 	box 1: x -40 y -40 w 40 h 40
