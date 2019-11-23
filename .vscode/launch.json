@@ -11,7 +11,7 @@
             "workingDirectory": "${workspaceRoot}",
             "sourceBasePath": "$C:\\Users\\Fazzino Inc\\Dropbox/app",
             "executable": "C:\\Users\\Fazzino Inc\\Dropbox/love.exe",
-            "arguments": "app",
+            "arguments": "C/Users/Fazzino Inc/Dropbox/app",
             "listenPublicly": false,
             "listenPort": 56789,
             "encoding": "UTF-8",

@@ -11,9 +11,10 @@ add
 
 new scene
 scene.name = firstscene
-scene.entities + guy (500,250)
-scene.entities + guy2 (300,200)
-scene.entities + guy3 (500,200)
+scene.entities + guy (500,550)
+scene.entities + guy2 (300,500)
+scene.entities + guy3 (500,500)
+scene.entities + wall1 (0,0)
 scene.events + StartChatGiveItem,StartChatDontHaveItem,StartChatWinGame,StartChatHaveItem
 scene.background = 37.jpg
 add
@@ -277,7 +278,8 @@ new entity
 	entity.standing = dudestanding
 	entity.talkToLocation = -20,20
 	entity.feet = 30,9
-  
+	entity.actor = true
+    
 add entity
 
 new entity
@@ -296,10 +298,18 @@ new entity
 	entity.walkRight = girlwalking
 	entity.walkLeft = girlwalkingleft
 	entity.standing = girlstanding
-	entity.actor = true
-  
+
 add entity
 
+new entity
+	entity.name = wall1
+	entity.drawType = lovedraw
+	entity.xy = 30,30
+  entity.boxes + 0,0,450,475,collision
+  entity.boxes + 450,0,120,340,collision
+  entity.boxes + 570,0,200,340,collision
+	entity.visible = false
+add entity
 new entity
 	entity.name = item1
 	entity.drawType = lovedraw

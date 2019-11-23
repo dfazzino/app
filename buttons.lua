@@ -45,6 +45,9 @@ function loadButtons (buttonsSection)
 					if entityWords[2] == "action" then
 						entity.action = words[i + 2]
 					end
+          if entityWords[2] == "hiddenbutton" then
+						entity.hiddenbutton = words[i + 2]
+					end
 					if entityWords[2] == "drawType" then
 						entity.drawType = words[i + 2]
 					end
