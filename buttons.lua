@@ -5,9 +5,12 @@ function showButtons(show)
 	for i, b in ipairs(entities) do	
 		if b.action ~= nil then
 			if show == true then
-				b.visible = "true"
-				moveEntityDirect(nil, b, UI.mousex .. "," .. UI.mousey)
-
+        if b.hiddenbutton ~= "true" then
+          b.visible = "true"
+        end 
+        if b.static ~= "true" then
+          moveEntityDirect(nil, b, UI.mousex .. "," .. UI.mousey)
+        end
 			else
 				b.visible = "false"
 			end
@@ -43,11 +46,18 @@ function loadButtons (buttonsSection)
 					-- print (entityWords[2])
 
 					if entityWords[2] == "action" then
-						entity.action = words[i + 2]
+            local action = line:gsub(words[1], "")
+            action = trim(action:gsub(words[2], ""))
+
+						entity.action = action
 					end
           if entityWords[2] == "hiddenbutton" then
 						entity.hiddenbutton = words[i + 2]
 					end
+          if entityWords[2] == "static" then
+						entity.static = words[i + 2]
+					end
+					
 					if entityWords[2] == "drawType" then
 						entity.drawType = words[i + 2]
 					end
@@ -75,7 +85,13 @@ function loadButtons (buttonsSection)
 						box.box = boxWords[3] .. "," .. boxWords[4]
 						table.insert(entity.boxes, box)
 					end
-					
+					if entityWords[2]:includes("Location") then
+						if entity.interactLocations == nil then entity.interactLocations = {} end
+						interactLocation = {}
+						interactLocation.action = string.gsub(entityWords[2], "Location", "")
+						interactLocation.xy = words[i + 2]
+						table.insert(entity.interactLocations, interactLocation)
+					end
 				end
 			end
 			if word == "add" then
@@ -106,11 +122,17 @@ function addButton()
 function doButtonPress()
 
 	for i, b in ipairs(entities) do
-		if getPointingAt("action") == b.action and b.action ~= nil then 
+    local buttonEntity = getEntity(getPointingAt("name"))
+		if buttonEntity.action == b.action and b.action ~= nil then 
 			-- print(acteeName)
+      thisAction = b.action
 			acteeEntity = getEntity(acteeName)
+      if acteeEntity == "none" and buttonEntity.interactLocations[1] ~= nil then
+          acteeEntity = buttonEntity
+          thisAction = buttonEntity.interactLocations[1].action
+      end
 			-- print(acteeEntity.name)
-			local thisPath = moveToEntity(actorEntity, acteeEntity, b.action)
+			local thisPath = moveToEntity(actorEntity, acteeEntity, thisAction)
 			action = actorEntity.name .. ' ' .. b.action .. ' ' .. acteeEntity.name	
 			checkEvents(action, thisPath)
       
