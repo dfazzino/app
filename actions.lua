@@ -119,13 +119,20 @@ function doAction(strActions, barSplit, dt)
 			queueActions.actions = tempActions
 			
 		end
-		action = trim(action)
+		
+    performAction(action)
+	end
+end
+
+
+function performAction(action)
+	action = trim(action)
 		if action ~= nil then
 			local actionWords = action:split(" ") 
 			verb = trim(actionWords[1])
 			print (action)
 			varName =  UserValues2(trim(actionWords[2]))
-			value = trim(actionWords[3])
+			value = trim(actionWords[3] or "")
 			if queueActions.actions ~= nil then 
 				addActionToQueue(string.sub(queueActions.actions, 1, -2), actionWords)
 			end
@@ -155,12 +162,13 @@ function doAction(strActions, barSplit, dt)
 			if (verb:includes("Inv")) then
 				inventoryCommand(verb,varName,value, actionWords)
 			end			
+      if (verb:includes("loadScene")) then
+        sceneCommands(verb,verName)
+      end
 			
 		end	
-		
-	end
-end
 
+end
 
 function doCommand(verb, varName, value, actionWords)
 
@@ -210,6 +218,11 @@ function inventoryCommand(verb,itemID,entity, actionWords)
 	
 end
 
+function  sceneCommands(verb, varname)
+
+  loadScene(varname)
+  
+end
 
 function eventCreate(varName, value, actionWords)
 
