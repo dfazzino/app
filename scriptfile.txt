@@ -1,17 +1,11 @@
-VARIABLES SECTION.
-
-new variable
-variable.name = start
-variable.value = 0
-add
-END VARIABLES.
-
 SCENE SECTION.
 
 new scene
 scene.name = all
-scene.events + movedown,moveup,moveleft,moveright,movelefty,moverighty,moveupy,movedowny
-
+scene.events + movedown
+scene.events + moveup
+scene.events + moveleft
+scene.events + moveright              
 add
 
 new scene
@@ -19,7 +13,7 @@ scene.name = firstscene
 scene.entities + guy (500,550)
 scene.entities + guy2 (300,500)
 scene.entities + guy3 (500,500)
-scene.events + StartChatGiveItem,StartChatDontHaveItem,StartChatWinGame,StartChatHaveItem,start
+scene.events + StartChatGiveItem,StartChatDontHaveItem,StartChatWinGame,StartChatHaveItem,loadFirstScene
 scene.background = 37.jpg
 add
 
@@ -165,53 +159,29 @@ END ART.
 
 
 EVENTS SECTION.
-
+ 
 new event as always
 	event.name = movedown
-	event.logic = keydown s
-	event.actions = move guy2 0,15
+	event.logic = keydown down
+	event.actions = move guy 0,3
 add
 
 new event as always
 	event.name = moveright	
-	event.logic = keydown d
-	event.actions = move guy2 15,0 
+	event.logic = keydown right
+	event.actions = move guy 3,0 
 add
 	
 new event as always
 	event.name = moveleft
-	event.logic = keydown a
-	event.actions = move guy2 -15,0 
+	event.logic = keydown left
+	event.actions = move guy -3,0 
 add
 
 new event as always
 	event.name = moveup
-	event.logic = keydown w
-	event.actions = move guy2 0,-15
-add 
- 
-new event as always
-	event.name = movedowny
-	event.logic = keydown down
-	event.actions = move guy 0,15
-add
-
-new event as always
-	event.name = moverighty	
-	event.logic = keydown right
-	event.actions = move guy 15,0 
-add
-	
-new event as always
-	event.name = movelefty
-	event.logic = keydown left
-	event.actions = move guy -15,0 
-add
-
-new event as always
-	event.name = moveupy
 	event.logic = keydown up
-	event.actions = move guy 0,-15
+	event.actions = move guy 0,-3
 add
 
 new event as playeraction (guy2 talkTo guy3)
@@ -259,9 +229,17 @@ new event as playeraction (guy2 zimva guy3)
 add
 
 new event as always
+	
 	event.name = start
+	
 	event.logic = var|start is 0
-	event.actions = loadscene fistscene then set start 1 
+
+	event.actions = start chat startGame then set start 1 
+add
+
+new event as playeraction (loadScene firstscene)
+  event.name = loadFirstScene
+  event.actions = loadScene secondscene
 add
 
 END EVENTS.
@@ -304,7 +282,6 @@ new entity
 	entity.talkToLocation = -20,20
 	entity.feet = 30,9
 	entity.actor = true
-  entity.speed = 150
     
 add entity
 
@@ -327,6 +304,7 @@ new entity
 
 add entity
 
+
 new entity
 	entity.name = item1
 	entity.drawType = lovedraw
@@ -340,6 +318,18 @@ END ENTITIES.
 
 
 PLAYER ACTION BUTTONS SECTION.
+new button
+	button.name = loadfirstscene
+	button.action = loadScene firstscene
+  button.xy = 1,400
+	button.boxes + 0,0,20,150
+  button.hiddenbutton = false
+	button.drawType = lovedraw
+	button.visible = false
+	button.text = talk
+  button.static = true
+	button.ToLocation = 50,50
+add button
 
 new button
 	button.name = talk

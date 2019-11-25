@@ -82,12 +82,18 @@ function setupNewScene()
     scene.events = {}
     scene.chats = {}
     scene.doors = {}
-  
+
 end
 
 
 function addScene()
-  
+    for i, button in ipairs(entities) do
+        if button.action ~= nil then
+            sceneEntity = {}
+            sceneEntity.entity = button
+            table.insert(scene.entities, sceneEntity)
+        end
+    end    
   scenes[scene.name] = scene
   
 end
@@ -98,7 +104,8 @@ function loadScene(name)
   collisionBoxes = {}
   currentScene = scenes[name]
 
-		for i, sceneEntity in ipairs(currentScene.entities) do
+		for i, sceneEntity in ipairs(currentScene.entities)  do
+      if sceneEntity.entity.action == nil then
         sceneEntity.entity.xy = sceneEntity.xy
         local entity = sceneEntity.entity
         xy = split(sceneEntity.xy, ",")
@@ -110,14 +117,12 @@ function loadScene(name)
           if box.collision == true then
             table.insert(collisionBoxes, box)
           end 
-			end
-    end
-    for i, button in ipairs(entities) do
-        if button.action ~= nil then
-            table.insert(currentScene.entities, button)
         end
+      end
     end
+
     for i, sceneEntity in ipairs(scenes["all"].entities) do
+      if sceneEntity.entity.action == nil then
         sceneEntity.entity.xy = sceneEntity.xy
         local entity = sceneEntity.entity
         xy = split(sceneEntity.xy, ",")
@@ -129,8 +134,10 @@ function loadScene(name)
           if box.collision == true then
             table.insert(collisionBoxes, box)
           end 
+        end
 			end
     end
+
     for i, event in ipairs(scenes["all"].events) do
        table.insert(currentScene.events, event) 
     end

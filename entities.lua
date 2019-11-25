@@ -490,8 +490,9 @@ function updateXYtoFlux()
 			end
 
 			if e.walkingToEntity ~= nil then
-				local tempxy = e.walkingToEntity.xy
-				dist = distanceFrom(e.x, e.y, tonumber(tempxy[1]), tonumber(tempxy[2]))
+				local tempxy = split(e.walkingToEntity.xy, ",")
+        
+		--		dist = distanceFrom(e.x, e.y, tonumber(tempxy[1]), tonumber(tempxy[2]))
 --				if dist < 250 then 
 --					e.flux:stop()
 --					e.walkingtoEntity = nil
@@ -519,7 +520,7 @@ function getPointingAt(value)
   else
     entity = sceneEntity
   end
-		if entity.visible ~= false then
+		if entity.visible ~= false or entity.hiddenbutton == true then
 			for i, box in ipairs(entity.boxes) do
 				entityxy = entity.xy:split(",")
 				xy = split(box.relativexy, ",")
