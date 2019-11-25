@@ -218,6 +218,11 @@ function inventoryCommand(verb,itemID,entity, actionWords)
 	
 end
 
+function  sceneCommands(verb, varname)
+
+  loadScene(varname)
+  
+end
 
 function eventCreate(varName, value, actionWords)
 
