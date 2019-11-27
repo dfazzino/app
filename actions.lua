@@ -129,15 +129,14 @@ function performAction(action)
 	action = trim(action)
 		if action ~= nil then
 			local actionWords = action:split(" ") 
-			verb = trim(actionWords[1])
-			print (action)
-			varName =  UserValues2(trim(actionWords[2]))
-			value = trim(actionWords[3] or "")
+			local actionWord1 = trim(actionWords[1])
+			local actionWord2 =  UserValues2(trim(actionWords[2]))
+			local actionWord3 = trim(actionWords[3] or "")
 			if queueActions.actions ~= nil then 
 				addActionToQueue(string.sub(queueActions.actions, 1, -2), actionWords)
 			end
 			
-			if verb == "start" and varName == "chat" then
+			if actionWord1 == "start" and actionWord2 == "chat" then
 				if (currChatNode == nil ) then
 					initChat(value)
 					setupChat()
@@ -150,20 +149,20 @@ function performAction(action)
 				value = SystemValues(value)
 				value = UserValues2	(value)
 			end
-			if verb == "append" or verb == "set" or verb == "delete" then
-				doCommand(verb, varName, value, actionWords)
+			if actionWord1 == "append" or actionWord1 == "set" or actionWord1 == "delete" then
+				doCommand(actionWord1, actionWord2, actionWord3, actionWords)
 			end
-			if (verb == "move" or verb == "moveTo") and (varName ~= "" and varName ~= nil) then
-				entityCommand(verb, varName, value, actionWords, dt)
+			if (actionWord1 == "move" or actionWord1== "moveTo") and (actionWord2 ~= "" and actionWord2 ~= nil) then
+				entityCommand(actionWord1, actionWord2, actionWord3, actionWords, dt)
 			end
-			if (verb == "create") then
-				eventCreate(varName, value, actionWords)
+			if (actionWord1 == "create") then
+				eventCreate(actionWord2, actionWord3, actionWords)
 			end	
-			if (verb:includes("Inv")) then
-				inventoryCommand(verb,varName,value, actionWords)
+			if (actionWord1:includes("Inv")) then
+				inventoryCommand(actionWord1,actionWord2,actionWord3, actionWords)
 			end			
-      if (verb:includes("loadScene")) then
-        sceneCommands(verb, varName)
+      if (actionWord1:includes("loadScene")) then
+        sceneCommands(actionWord1,actionWord2)
       end
 			
 		end	
@@ -218,9 +217,9 @@ function inventoryCommand(verb,itemID,entity, actionWords)
 	
 end
 
-function  sceneCommands(verb, varname)
+function  sceneCommands(verb, scene)
 
-  loadScene(varname)
+  loadScene(scene)
   
 end
 
