@@ -160,7 +160,7 @@ function love.wheelmoved(x, y)
     end
 
 function love.textinput(t)
-nk.textinput(text)
+nk.textinput(t)
 end
 
 function love.mousereleased(x, y, button, istouch)

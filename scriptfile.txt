@@ -5,8 +5,7 @@ scene.name = all
 scene.events + movedown
 scene.events + moveup
 scene.events + moveleft
-scene.events + moveright
-
+scene.events + moveright              
 add
 
 new scene
@@ -14,7 +13,7 @@ scene.name = firstscene
 scene.entities + guy (500,550)
 scene.entities + guy2 (300,500)
 scene.entities + guy3 (500,500)
-scene.events + StartChatGiveItem,StartChatDontHaveItem,StartChatWinGame,StartChatHaveItem
+scene.events + StartChatGiveItem,StartChatDontHaveItem,StartChatWinGame,StartChatHaveItem,loadFirstScene
 scene.background = 37.jpg
 add
 
@@ -236,6 +235,11 @@ new event as always
 	event.logic = var|start is 0
 
 	event.actions = start chat startGame then set start 1 
+add
+
+new event as playeraction (loadScene firstscene)
+  event.name = loadFirstScene
+  event.actions = loadScene secondscene
 add
 
 END EVENTS.

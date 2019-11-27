@@ -44,12 +44,14 @@ function loadButtons (buttonsSection)
 					word = word:gsub("%.", "|")
 					entityWords = split(word, "|")
 					-- print (entityWords[2])
-
 					if entityWords[2] == "action" then
             local action = line:gsub(words[1], "")
             action = trim(action:gsub(words[2], ""))
 
 						entity.action = action
+					end
+          if entityWords[2] == "name" then
+						entity.name = words[i + 2]
 					end
           if entityWords[2] == "hiddenbutton" then
 						entity.hiddenbutton = words[i + 2]
@@ -122,18 +124,27 @@ function addButton()
 function doButtonPress()
 
 	for i, b in ipairs(entities) do
-    local buttonEntity = getEntity(getPointingAt("name"))
-		if buttonEntity.action == b.action and b.action ~= nil then 
+    
+		if getPointingAt("action") == b.action and b.action ~= nil then 
 			-- print(acteeName)
-      thisAction = b.action
 			acteeEntity = getEntity(acteeName)
-      if acteeEntity == "none" and buttonEntity.interactLocations[1] ~= nil then
-          acteeEntity = buttonEntity
-          thisAction = buttonEntity.interactLocations[1].action
+      tempAction = b.action
+
+      if acteeEntity == "none" then
+        acteeEntity = b
+        tempAction = b.interactLocations[1].action
+        tempName = nil
+      else
+        tempName = acteeName
+
       end
 			-- print(acteeEntity.name)
-			local thisPath = moveToEntity(actorEntity, acteeEntity, thisAction)
-			action = actorEntity.name .. ' ' .. b.action .. ' ' .. acteeEntity.name	
+			local thisPath = moveToEntity(actorEntity, acteeEntity, tempAction)
+      if tempName == nil then
+      			action = b.action
+      else
+      			action = actorEntity.name .. ' ' .. b.action .. ' ' .. tempName	
+      end
 			checkEvents(action, thisPath)
       
 			return true
