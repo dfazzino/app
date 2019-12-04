@@ -138,16 +138,16 @@ function performAction(action)
 			
 			if actionWord1 == "start" and actionWord2 == "chat" then
 				if (currChatNode == nil ) then
-					initChat(value)
+					initChat(actionWord3)
 					setupChat()
 				end
 			end
-			if string.match(value, "pointingAt") == "pointingAt" then
-				value = split(value, '|')
-				value = getPointingAt(value[2])
+			if string.match(actionWord3, "pointingAt") == "pointingAt" then
+				actionWord3 = split(actionWord3, '|')
+				actionWord3 = getPointingAt(actionWord3[2])
 			else
-				value = SystemValues(value)
-				value = UserValues2	(value)
+				actionWord3 = SystemValues(actionWord3)
+				actionWord3 = UserValues2	(actionWord3)
 			end
 			if actionWord1 == "append" or actionWord1 == "set" or actionWord1 == "delete" then
 				doCommand(actionWord1, actionWord2, actionWord3, actionWords)
@@ -162,7 +162,7 @@ function performAction(action)
 				inventoryCommand(actionWord1,actionWord2,actionWord3, actionWords)
 			end			
       if (actionWord1:includes("loadScene")) then
-        sceneCommands(actionWord1,actionWord2)
+        sceneCommands(actionWord1,actionWord2,actionWord3)
       end
 			
 		end	
@@ -217,9 +217,9 @@ function inventoryCommand(verb,itemID,entity, actionWords)
 	
 end
 
-function  sceneCommands(verb, scene)
+function  sceneCommands(verb, scene, xy)
 
-  loadScene(scene)
+  loadScene(scene, xy)
   
 end
 
