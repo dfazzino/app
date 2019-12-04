@@ -1,3 +1,12 @@
+VARIABLES SECTION.
+
+new variable
+variable.name = start
+variable.value = 0
+add
+
+END VARIABLES.
+
 SCENE SECTION.
 
 new scene
@@ -10,23 +19,39 @@ add
 
 new scene
 scene.name = firstscene
-scene.entities + guy (500,550)
-scene.entities + guy2 (300,500)
-scene.entities + guy3 (500,500)
-scene.events + StartChatGiveItem,StartChatDontHaveItem,StartChatWinGame,StartChatHaveItem,loadFirstScene
+scene.entities + guy (300,300)
+scene.entities + guy2 (100,290)
+scene.entities + guy3 (200,500)
+scene.events + start,StartChatGiveItem,StartChatDontHaveItem,StartChatWinGame,StartChatHaveItem,loadSecondScene
 scene.background = 37.jpg
+scene.door + 300,343,100,100,firstscene,secondscene,339,355,64,309
 add
 
 new scene
 scene.name = secondscene
-scene.entities + guy (100, 210)
+scene.entities + guy2 (100, 210)
 scene.events + StartChatGiveItem
 scene.events + StartChatDontHaveItem
 scene.events + StartChatWinGame
 scene.events + StartChatHaveItem
-scene.door + secondscene,1,1,15,100, wineglass
+scene.events + loadFirstScene
 scene.gradientsize = 80%
+scene.background = indoor-pool-lodge-cabin-rental-property-picture-10335-700.jpg
+scene.door + 64,154,100,100,secondscene,firstscene,107,282,400,420
+scene.door + 600,400,100,100,secondscene,thirdscene,600,400,170,262
+add
 
+new scene
+scene.name = thirdscene
+scene.entities + guy2 (100, 210)
+scene.events + StartChatGiveItem
+scene.events + StartChatDontHaveItem
+scene.events + StartChatWinGame
+scene.events + StartChatHaveItem
+scene.events + loadFirstScene
+scene.gradientsize = 80%
+scene.background = logcabin_770_400_s_c1_c_c.jpg
+scene.door + 64,154,100,100,thirdscene,secondscene,107,282,400,420
 add
 
 END SCENES.
@@ -215,8 +240,6 @@ add
 new event as chatevent (haveItem_giveItemToGuy3)
 	event.actions = addInv item guy3 then start chat winning
 add
-2
-
 
 new event as playeraction (guy2 push guy3)
 	event.name = test4
@@ -228,20 +251,21 @@ new event as playeraction (guy2 zimva guy3)
 	event.actions = start chat hasItem
 add
 
-new event as always
-	
+new event as always	
 	event.name = start
-	
-	event.logic = var|start is 0
+	event.logic = var|start5 is 0
+	event.actions = start chat startGame then loadScene firstscene then set start 1 
+add
 
-	event.actions = start chat startGame then set start 1 
+new event as playeraction (loadScene secondscene)
+  event.name = loadSecondScene
+  event.actions = loadScene secondscene
 add
 
 new event as playeraction (loadScene firstscene)
   event.name = loadFirstScene
   event.actions = loadScene secondscene
 add
-
 END EVENTS.
 
 
@@ -318,18 +342,7 @@ END ENTITIES.
 
 
 PLAYER ACTION BUTTONS SECTION.
-new button
-	button.name = loadfirstscene
-	button.action = loadScene firstscene
-  button.xy = 1,400
-	button.boxes + 0,0,20,150
-  button.hiddenbutton = false
-	button.drawType = lovedraw
-	button.visible = false
-	button.text = talk
-  button.static = true
-	button.ToLocation = 50,50
-add button
+
 
 new button
 	button.name = talk

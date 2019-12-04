@@ -40,6 +40,7 @@ function drawInformation()
 
 
 	love.graphics.print(math.floor(UI.mousex  / 30) .. "," .. math.floor(UI.mousey / 30), 500, 500)
+	love.graphics.print(UI.mousex  .. "," .. UI.mousey, 500, 550)
 --	love.graphics.print(line, 0, 500)
 	value, entity = getPointingAt("name")
 	if value ~= "" then 

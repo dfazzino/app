@@ -127,6 +127,7 @@ function doButtonPress()
     
 		if getPointingAt("action") == b.action and b.action ~= nil then 
 			-- print(acteeName)
+--      acteeName = getPointingAt("name")
 			acteeEntity = getEntity(acteeName)
       tempAction = b.action
 

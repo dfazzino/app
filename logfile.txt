@@ -53,10 +53,13 @@ Starting to add events!
 ------------------------------------------------------------------
 ~~~event13  start~~
 	always
-		if  var|start is 0 [9]
-		 start chat startGame then set start 1
+		if  var|start5 is 0 [9]
+		 start chat startGame then loadScene firstscene then set start 1
 ------------------------------------------------------------------
-~~~event14  loadFirstScene~~
+~~~event14  loadSecondScene~~
+		 loadScene secondscene
+------------------------------------------------------------------
+~~~event15  loadFirstScene~~
 		 loadScene secondscene
 ------------------------------------------------------------------
 Starting to add entities!
@@ -87,32 +90,27 @@ Starting to add entities!
 
 ------------------------------------------------------------------
 Starting to add buttons!
-~~~button5  loadfirstscene~~
-	draw type: lovedraw
-	box 1: x 1 y 400 w 20 h 150
-
-------------------------------------------------------------------
-~~~button6  talk~~
+~~~button5  talk~~
 	draw type: lovedraw
 	box 1: x -40 y -40 w 40 h 40
 
 ------------------------------------------------------------------
-~~~button7  push~~
+~~~button6  push~~
 	draw type: lovedraw
 	box 1: x 0 y 0 w 40 h 40
 
 ------------------------------------------------------------------
-~~~button8  pull~~
+~~~button7  pull~~
 	draw type: lovedraw
 	box 1: x -40 y 0 w 40 h 40
 
 ------------------------------------------------------------------
-~~~button9  zimva~~
+~~~button8  zimva~~
 	draw type: lovedraw
 	box 1: x 0 y -40 w 40 h 40
 
 ------------------------------------------------------------------
-~~~button10  haha~~
+~~~button9  haha~~
 	draw type: lovedraw
 	box 1: x -40 y -80 w 40 h 40
 

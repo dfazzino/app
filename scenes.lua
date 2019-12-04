@@ -57,11 +57,40 @@ function loadScenes (sceneSection)
 					end		
           if sceneWords[2] == "door" then
             doorWords = split(words[i + 2], ",")
-            door = {}
-            door.name = doorWords[1]
-            door.xy = doorWords[2] .. "," .. doorWords[3]
-            door.lw = doorWords[4] .. "," .. doorWords[5]
-            door.image = doorWords[6]
+            entity = {}
+            sceneEntity = {}
+            entity.name = "doorFrom" .. doorWords[5] .. "To" .. doorWords[6]
+            entity.static = "true"
+            entity.hiddenbutton = "true"
+            doorWords[9] = doorWords[9] or 0
+            doorWords[10] = doorWords[10] or 0
+            entity.action = "loadScene "  .. doorWords[6] 
+            entity.xy = "0,0"
+            
+            entity.interactLocations = {}
+						interactLocation = {}
+						interactLocation.action = "To"
+						interactLocation.xy = doorWords[7] .. "," .. doorWords[8]
+
+            table.insert(entity.interactLocations, interactLocation)
+            
+            entity.boxes = {}
+            box = {}
+            box.relativexy = doorWords[1] .. "," .. doorWords[2]
+            box.box= doorWords[3] .. "," .. doorWords[4]
+            sceneEntity.entity = entity
+            sceneEntity.xy = "0,0"
+            table.insert(entity.boxes, box)
+            table.insert(entities, entity)
+            table.insert(scene.entities, sceneEntity)
+            
+            event = {}
+            event.name = "doorFrom" .. doorWords[5] .. "To" .. doorWords[6]
+            event.playerAction = "loadScene " .. doorWords[6]
+            event.trueactions = "loadScene " .. doorWords[6] .. " " .. doorWords[9] .. "," .. doorWords[10]
+            table.insert(events, event)
+            table.insert(scene.events, event)
+            
 					end        
 				end
 			end
@@ -99,15 +128,19 @@ function addScene()
 end
 
 
-function loadScene(name)
+function loadScene(name, actionXY)
   
   collisionBoxes = {}
   currentScene = scenes[name]
 
 		for i, sceneEntity in ipairs(currentScene.entities)  do
       if sceneEntity.entity.action == nil then
+        if actionXY ~= "0,0"  and actionXY ~= nil and actionXY ~= ""  and sceneEntity.entity.actor == "true"  then
+          sceneEntity.xy = actionXY
+        end
         sceneEntity.entity.xy = sceneEntity.xy
         local entity = sceneEntity.entity
+        
         xy = split(sceneEntity.xy, ",")
         for i, box in ipairs(entity.boxes) do
 	
