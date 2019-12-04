@@ -216,12 +216,13 @@ function love.update(dt)
 end
 
 function love.draw()
-	nk.draw()
   drawBackground()
 	drawUI()
 	drawEntities()
 	drawBubbles()
 	drawInformation()
+	nk.draw()
+
 --  drawImages()
 
 end

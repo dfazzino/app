@@ -637,9 +637,11 @@ function addInventory(itemID, name)
 	
 	if haveItem == false then
 		for i, entity in ipairs(entities) do
-			if entity.inventory:includes("_" .. itemID .. "_") then
-				entity.inventory = entity.inventory:gsub(itemID .. "_", "")				
-			end
+      if entity.inventory ~= nil then
+        if entity.inventory:includes("_" .. itemID .. "_") then
+          entity.inventory = entity.inventory:gsub(itemID .. "_", "")				
+        end
+      end 
 
 		end
 		

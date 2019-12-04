@@ -21,8 +21,7 @@ new scene
 scene.name = firstscene
 scene.entities + guy (300,300)
 scene.entities + guy2 (100,290)
-scene.entities + guy3 (200,500)
-scene.events + start,StartChatGiveItem,StartChatDontHaveItem,StartChatWinGame,StartChatHaveItem,loadSecondScene
+scene.events + giveItem,start,StartChatGiveItem,StartChatDontHaveItem,StartChatWinGame,StartChatHaveItem,loadSecondScene
 scene.background = 37.jpg
 scene.door + 300,343,100,100,firstscene,secondscene,339,355,64,309
 add
@@ -30,6 +29,7 @@ add
 new scene
 scene.name = secondscene
 scene.entities + guy2 (100, 210)
+scene.entities + guy3 (200,500)
 scene.events + StartChatGiveItem
 scene.events + StartChatDontHaveItem
 scene.events + StartChatWinGame
@@ -39,6 +39,7 @@ scene.gradientsize = 80%
 scene.background = indoor-pool-lodge-cabin-rental-property-picture-10335-700.jpg
 scene.door + 64,154,100,100,secondscene,firstscene,107,282,400,420
 scene.door + 600,400,100,100,secondscene,thirdscene,600,400,170,262
+
 add
 
 new scene
@@ -234,10 +235,11 @@ new event as playeraction (guy2 talkTo guy)
 add
 
 new event as chatevent (giveItem_takeItem)
+  event.name = giveItem
 	event.actions = addInv item guy2
 add
 
-new event as chatevent (haveItem_giveItemToGuy3)
+new event as chatevent (haveItem_GiveItem)
 	event.actions = addInv item guy3 then start chat winning
 add
 
@@ -420,7 +422,7 @@ chatnode.response = guy3: awesome, will you give it to me?
 add chatnode
 
 new chatnode
-chatnode.id = haveItem_giveItemToGuy3
+chatnode.id = haveItem_GiveItem
 chatnode.text = guy2: Ok, here you go.
 chatnode.checkEventsAfterChat = true
 chatnode.time = 5

@@ -39,7 +39,7 @@ Starting to add events!
 ~~~event8  StartChatGiveItem~~
 		 start chat giveItem
 ------------------------------------------------------------------
-~~~event9~~
+~~~event9  giveItem~~
 		 addInv item guy2
 ------------------------------------------------------------------
 ~~~event10~~

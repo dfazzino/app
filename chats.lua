@@ -306,7 +306,6 @@ function drawChat ()
 		theselines.value = 1
 
 		local labelWords = ""
-		table.insert(theselines.items, "Select One")
 		for i, line in ipairs(lines) do
 			if i > 1 then
 				table.insert(theselines.items, line.id)
@@ -316,19 +315,27 @@ function drawChat ()
 		if nk.windowBegin('Chat window', 300, 100, 300, 200,
 				'border', 'title', 'movable') then
 			nk.layoutRow('dynamic', 100, 1)
-			nk.label(labelWords, "top left")
+--			nk.label(labelWords, "top left")
 			nk.layoutRow('dynamic', 30, 2)
-			if nk.combobox(theselines, theselines.items,40,200) then
-				currChatNode = currChatNode .. "_" .. theselines.items[theselines.value]
-				count = count + 1
-				setupChat()
-			end
-      
+      for i, item in ipairs(theselines.items) do
+        if nk.button(item) then 
+          currChatNode = currChatNode .. "_" .. item
+                count = count + 1
+
+          setupChat()
+        end
+      end
+--			if nk.combobox(theselines, theselines.items,40,200) then
+--				currChatNode = currChatNode .. "_" .. theselines.items[theselines.value]
+--				count = count + 1
+--				setupChat()
+--			end
 
 		end
 		nk.windowEnd()
 	end
 	bubbleTimer()
+
 end
 
 
