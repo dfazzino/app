@@ -119,8 +119,8 @@ function doAction(strActions, barSplit, dt)
 			queueActions.actions = tempActions
 			
 		end
-		
     performAction(action)
+		
 	end
 end
 
@@ -137,10 +137,10 @@ function performAction(action)
 			end
 			
 			if actionWord1 == "start" and actionWord2 == "chat" then
-				if (currChatNode == nil ) then
+--				if (currChatNode == nil ) then
 					initChat(actionWord3)
 					setupChat()
-				end
+--				end
 			end
 			if string.match(actionWord3, "pointingAt") == "pointingAt" then
 				actionWord3 = split(actionWord3, '|')
@@ -164,7 +164,10 @@ function performAction(action)
       if (actionWord1:includes("loadScene")) then
         sceneCommands(actionWord1,actionWord2,actionWord3)
       end
-			
+      if (actionWord1:includes("changeAnimation")) then
+        entityCommand(actionWord1,actionWord2,actionWord3)
+      end			
+    
 		end	
 
 end
@@ -197,10 +200,18 @@ function entityCommand(verb, varName, value, actionWords, dt)
 
 	if  verb == "moveTo" then
 		moveEntityTo(varName, value, actionWords)
-	else if  verb == "move" then
+	elseif  verb == "move" then
 		--local xy = split(entity.boxes[1].xy, ",")
 		moveEntity(varName, value, actionWords, dt)
-		end
+  elseif verb == "changeAnimationHold" then
+    local thisEntity = getEntity(varName)
+    thisEntity.animation = animations[value]
+    thisEntity.noAnimationOverride = true
+
+  elseif verb == "changeAnimation" then
+    local thisEntity = getEntity(varName)
+    
+    thisEntity.animation = animations[value]
 	end
 
 end

@@ -284,6 +284,8 @@ function checkEvents (eventType, thisPath)
 --				checkLogic(event.logic, event.trueactions, event.falseactions, event.delete)
 					
 				else
+          
+          print("click event " .. event.trueactions )
 					doAction(event.trueactions)
 					if event.delete == true then event.deleted = true end
 				end
@@ -318,7 +320,8 @@ function checkEvents (eventType, thisPath)
 				if event.logic ~= nil then
 					checkLogic(event.logic, thisPath .. event.trueactions, nil, event.delete)
 --					checkLogic(event.logic, thisPath .. event.trueactions, thisPath .. event.falseactions, event.delete)
-				else
+      else
+          print("playeraction " .. event.trueactions)
 					doAction(thisPath .. event.trueactions)
 					if event.delete == true then event.deleted = true end
 
@@ -330,7 +333,8 @@ function checkEvents (eventType, thisPath)
 					checkLogic(event.logic, thisPath .. event.trueactions,nil, event.delete)
 --					checkLogic(event.logic, thisPath .. event.trueactions,event.falseactions, event.delete)
 				else
-					doAction(thisPath .. event.trueactions)
+          print("chat action " .. event.trueactions)
+					chatnode = doAction(thisPath .. event.trueactions)
 					if event.delete == true then event.deleted = true end
 
 				end			

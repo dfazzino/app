@@ -15,10 +15,12 @@ require 'ui'
 require 'chats'
 require 'buttons'
 xml2lua = require ('xml2lua')
-
+push = require "push" --require the library
 
 function love.load()
-
+ love.window.setMode(800, 600, {resizable=true, vsync=false, minwidth=400, minheight=300})
+ 
+ push:setupScreen(800, 600, 800, 600, {fullscreen = false, resizable = true})
   if arg and arg[#arg] == "-debug" then require("mobdebug").start() end
 	initScenes()
 
@@ -202,8 +204,13 @@ function love.update(dt)
 --	 require("lovebird").update()
 	nk.frameBegin()
 	flux.update(dt)
-	UI.mousex = love.mouse.getX()
-	UI.mousey = love.mouse.getY()
+  UI.mousex, UI.mousey = push:toGame(love.mouse.getX(), love.mouse.getY())
+  if UI.mousex == nil or UI.mousey == nil then
+     UI.mousex = 0
+     UI.mousey = 0
+  end
+--	UI.mousex = love.mouse.getX()
+--	UI.mousey = love.mouse.getY()
 	checkEvents("always")
 	checkTimers()
 	updateAnimate(dt)
@@ -216,13 +223,18 @@ function love.update(dt)
 end
 
 function love.draw()
+   push:start()
   drawBackground()
 	drawUI()
 	drawEntities()
 	drawBubbles()
 	drawInformation()
 	nk.draw()
-
+  push:finish()
 --  drawImages()
 
+end
+
+function love.resize(w, h)
+  push:resize(w, h)
 end

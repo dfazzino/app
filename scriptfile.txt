@@ -15,13 +15,20 @@ scene.events + movedown
 scene.events + moveup
 scene.events + moveleft
 scene.events + moveright              
+scene.events + movedown2
+scene.events + moveup2
+scene.events + moveleft2
+scene.events + moveright2              
+
 add
 
 new scene
 scene.name = firstscene
 scene.entities + guy (300,300)
 scene.entities + guy2 (100,290)
-scene.events + giveItem,start,StartChatGiveItem,StartChatDontHaveItem,StartChatWinGame,StartChatHaveItem,loadSecondScene
+scene.entities + guy3 (200,500)
+
+scene.events + giveItem,start,StartChatGiveItem,StartChatDontHaveItem,StartChatWinGame,StartChatHaveItem,loadSecondScene,giveItem2,winningDance
 scene.background = 37.jpg
 scene.door + 300,343,100,100,firstscene,secondscene,339,355,64,309
 add
@@ -29,7 +36,6 @@ add
 new scene
 scene.name = secondscene
 scene.entities + guy2 (100, 210)
-scene.entities + guy3 (200,500)
 scene.events + StartChatGiveItem
 scene.events + StartChatDontHaveItem
 scene.events + StartChatWinGame
@@ -131,6 +137,46 @@ animation.rate = 0.125
 add
 
 new animation
+animation.name = dudehopping
+animation.sheet = dude
+animation.x1 = 5-5
+animation.y1 = 1-1
+animation.rate = 0.125
+add
+
+new animation
+animation.name = robotdance
+animation.sheet = robot
+animation.x1 = 1-5
+animation.y1 = 3-3
+animation.rate = 0.125
+add
+
+new animation
+animation.name = girldance
+animation.sheet = girl
+animation.x1 = 2-5
+animation.y1 = 2-2
+animation.rate = 0.125
+add
+
+
+new animation
+animation.name = dudedance
+animation.sheet = dude
+animation.x1 = 2-5
+animation.y1 = 2-2
+animation.rate = 0.125
+add
+
+new animation
+animation.name = robothopping
+animation.sheet = robot
+animation.x1 = 5-5
+animation.y1 = 1-1
+animation.rate = 0.125
+add
+new animation
 animation.name = dudestanding
 animation.sheet = dude
 animation.x1 = 1-1
@@ -172,8 +218,19 @@ animation.y1 = 5-5
 animation.rate = 0.125
 add
 
+
 new animation
-animation.name = robotstanding
+animation.name = robotwalkingleft
+animation.sheet = robot
+animation.x1 = 1-8
+animation.y1 = 5-5
+animation.rate = 0.125
+animation.flip = flipH
+
+add
+
+new animation
+animation.name = robotstanding            
 animation.sheet = robot
 animation.x1 = 1-1
 animation.y1 = 1-1
@@ -189,25 +246,51 @@ EVENTS SECTION.
 new event as always
 	event.name = movedown
 	event.logic = keydown down
-	event.actions = move guy 0,3
+	event.actions = move guy3 0,.3
 add
 
 new event as always
 	event.name = moveright	
 	event.logic = keydown right
-	event.actions = move guy 3,0 
+	event.actions = move guy3 .3,0 
 add
 	
 new event as always
 	event.name = moveleft
 	event.logic = keydown left
-	event.actions = move guy -3,0 
+	event.actions = move guy3 -.3,0 
 add
 
 new event as always
 	event.name = moveup
 	event.logic = keydown up
-	event.actions = move guy 0,-3
+	event.actions = move guy3 0,-.3
+  
+add
+
+new event as always
+	event.name = movedown2
+	event.logic = keydown s
+	event.actions = move guy 0,.3
+add
+
+new event as always
+	event.name = moveright2	
+	event.logic = keydown a
+	event.actions = move guy -.3,0 
+add
+	
+new event as always
+	event.name = moveleft2
+	event.logic = keydown d
+	event.actions = move guy .3,0 
+add
+
+new event as always
+	event.name = moveup2
+	event.logic = keydown w
+	event.actions = move guy 0,-.3
+  
 add
 
 new event as playeraction (guy2 talkTo guy3)
@@ -236,11 +319,17 @@ add
 
 new event as chatevent (giveItem_takeItem)
   event.name = giveItem
-	event.actions = addInv item guy2
+	event.actions = changeAnimationHold guy robothopping then addInv item guy2
+add
+
+new event as chatevent (winning)
+  event.name = winningDance
+	event.actions =  changeAnimationHold guy2 dudedance then changeAnimationHold guy3 girldance then moveTo guy 100,200/moveTo guy 200,100/moveTo guy 100,300/moveTo guy 200,100/start chat winning
 add
 
 new event as chatevent (haveItem_GiveItem)
-	event.actions = addInv item guy3 then start chat winning
+  event.name = giveItem2
+	event.actions = changeAnimationHold guy3 dudehopping then addInv item guy3 then start chat winning
 add
 
 new event as playeraction (guy2 push guy3)
@@ -284,7 +373,8 @@ new entity
   entity.boxes + -30,-20,50,30,collision
 	entity.feet = 30,128
 	entity.talkToLocation = 150,50
-	
+	entity.walkRight = robotwalking
+	entity.walkLeft = robotwalkingleft	
 	entity.pushLocation = -50,50
 	
 	entity.zimvaLocation = 100,50
@@ -308,7 +398,7 @@ new entity
 	entity.talkToLocation = -20,20
 	entity.feet = 30,9
 	entity.actor = true
-    
+  entity.inventory = _item_  
 add entity
 
 new entity
@@ -430,7 +520,9 @@ add chatnode
 
 new chatnode
 chatnode.id = winning
-chatnode.text = guy3: hey thanks, I guess you win or something.
+chatnode.text  = guy2:here!
+chatnode.response = guy3:hey thanks, I guess you win or something.|guy2:oh ok, that's good.|guy:we should dance to show how happy we are
+chatnode.checkEventsAfterChat = true
 add chatnode
 
 new chatnode

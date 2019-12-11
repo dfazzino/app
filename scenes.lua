@@ -130,6 +130,7 @@ end
 
 function loadScene(name, actionXY)
   
+  currChatNode = nil
   collisionBoxes = {}
   currentScene = scenes[name]
 

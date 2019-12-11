@@ -6,60 +6,83 @@ Starting to add events!
 ~~~event1  movedown~~
 	always
 		if  keydown down [1]
-		 move guy 0,3
+		 move guy3 0,.3
 ------------------------------------------------------------------
 ~~~event2  moveright~~
 	always
 		if  keydown right [2]
-		 move guy 3,0
+		 move guy3 .3,0
 ------------------------------------------------------------------
 ~~~event3  moveleft~~
 	always
 		if  keydown left [3]
-		 move guy -3,0
+		 move guy3 -.3,0
 ------------------------------------------------------------------
 ~~~event4  moveup~~
 	always
 		if  keydown up [4]
-		 move guy 0,-3
+		 move guy3 0,-.3
 ------------------------------------------------------------------
-~~~event5  StartChatHaveItem~~
-		if  guy2 has item [5]
+~~~event5  movedown2~~
+	always
+		if  keydown s [5]
+		 move guy 0,.3
+------------------------------------------------------------------
+~~~event6  moveright2~~
+	always
+		if  keydown a [6]
+		 move guy -.3,0
+------------------------------------------------------------------
+~~~event7  moveleft2~~
+	always
+		if  keydown d [7]
+		 move guy .3,0
+------------------------------------------------------------------
+~~~event8  moveup2~~
+	always
+		if  keydown w [8]
+		 move guy 0,-.3
+------------------------------------------------------------------
+~~~event9  StartChatHaveItem~~
+		if  guy2 has item [9]
 		 start chat haveItem
 ------------------------------------------------------------------
-~~~event6  StartChatWinGame~~
-		if  guy3 has item [6]
+~~~event10  StartChatWinGame~~
+		if  guy3 has item [10]
 		 start chat winGame
 ------------------------------------------------------------------
-~~~event7  StartChatDontHaveItem~~
-		if  guy3 notHas item [7]
-			and guy2 notHas item [8]
+~~~event11  StartChatDontHaveItem~~
+		if  guy3 notHas item [11]
+			and guy2 notHas item [12]
 		 start chat dontHaveItem
 ------------------------------------------------------------------
-~~~event8  StartChatGiveItem~~
+~~~event12  StartChatGiveItem~~
 		 start chat giveItem
 ------------------------------------------------------------------
-~~~event9  giveItem~~
-		 addInv item guy2
+~~~event13  giveItem~~
+		 changeAnimationHold guy robothopping then addInv item guy2
 ------------------------------------------------------------------
-~~~event10~~
-		 addInv item guy3 then start chat winning
+~~~event14  winningDance~~
+		  changeAnimationHold guy2 dudedance then changeAnimationHold guy3 girldance then moveTo guy 100,200/moveTo guy 200,100/moveTo guy 100,300/moveTo guy 200,100/start chat winning
 ------------------------------------------------------------------
-~~~event11  test4~~
+~~~event15  giveItem2~~
+		 changeAnimationHold guy3 dudehopping then addInv item guy3 then start chat winning
+------------------------------------------------------------------
+~~~event16  test4~~
 		 start chat hasItem
 ------------------------------------------------------------------
-~~~event12  test4~~
+~~~event17  test4~~
 		 start chat hasItem
 ------------------------------------------------------------------
-~~~event13  start~~
+~~~event18  start~~
 	always
-		if  var|start5 is 0 [9]
+		if  var|start5 is 0 [13]
 		 start chat startGame then loadScene firstscene then set start 1
 ------------------------------------------------------------------
-~~~event14  loadSecondScene~~
+~~~event19  loadSecondScene~~
 		 loadScene secondscene
 ------------------------------------------------------------------
-~~~event15  loadFirstScene~~
+~~~event20  loadFirstScene~~
 		 loadScene secondscene
 ------------------------------------------------------------------
 Starting to add entities!

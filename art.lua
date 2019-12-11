@@ -377,7 +377,7 @@ function drawAnimation (entity)
 --  if size < .30 then 
 --    size = .30 end
   love.graphics.getHeight()
-  if entity.standing ~= nil then
+  if entity.standing ~= nil  and entity.noAnimationOverride ~= true then
   entity.animation = animations[entity.standing]
   end
   if entity.flux ~= nil and entity.noAnimationOverride ~= true then

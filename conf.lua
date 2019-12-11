@@ -20,4 +20,7 @@ function love.conf(t)
     t.modules.sound = true      	-- Enable the sound module (boolean)
     t.modules.physics = false    	-- Enable the physics module (boolean)
     t.modules.thread = true   
+    t.modules.window = true
+    t.modules.graphics = true
+    t.console = true
 end

@@ -137,6 +137,7 @@ function doButtonPress()
         tempName = nil
       else
         tempName = acteeName
+        acteeName = nil
 
       end
 			-- print(acteeEntity.name)
