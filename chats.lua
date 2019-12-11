@@ -277,7 +277,9 @@ function setupChat()
 					optionsCount = optionsCount + 1
 					line.optionNum = optionsCount
 					table.insert(lines, line) 
-				end
+          waitingForInput = true 
+
+        end
 			end
 		end	
 
@@ -291,16 +293,13 @@ function setupChat()
 				end
 			end
 			chatTimer = timer.getTime()
-		 if #lines <= 1 then
-			hldCurrChatNode = currChatNode
-			currChatNode = nil
-		 end
+
 	end
 	
 end
 
 function drawChat ()
-	if currChatNode ~= nil then
+	if currChatNode ~= nil and waitingForInput == true then
 		theselines.items = {}
 		theselines.text = {}
 		theselines.value = 1
@@ -309,7 +308,7 @@ function drawChat ()
 		for i, line in ipairs(lines) do
 			if i > 1 then
 				table.insert(theselines.items, line.id)
-				labelWords = labelWords .. line.text .. "\n"
+        labelWords = labelWords .. line.text .. "\n"
 			end
 		end
 		if nk.windowBegin('Chat window', 300, 100, 300, 200,
@@ -320,7 +319,8 @@ function drawChat ()
       for i, item in ipairs(theselines.items) do
         if nk.button(item) then 
           currChatNode = currChatNode .. "_" .. item
-                count = count + 1
+          count = count + 1
+          waitingForInput = false 
 
           setupChat()
         end
@@ -330,7 +330,6 @@ function drawChat ()
 --				count = count + 1
 --				setupChat()
 --			end
-
 		end
 		nk.windowEnd()
 	end
@@ -394,14 +393,24 @@ function bubbleTimer()
 	if chatTimer < timer.getTime() - bubbleTimer then
 		chatBubble = chatBubble + 1
 		chatTimer = timer.getTime()
-		end
-	if chatResponses ~= nil then
-		if chatBubble > #chatResponses + 1 then
-			if checkEventsAfterChat == true then
-				checkEvents(currChatNode or hldCurrChatNode, "")
-				hldCurrChatNode = nil
-				checkEventsAfterChat = nil
-			end 
-		end		
-	end
+  end
+  if chatResponses ~= nil then
+    if #chatResponses > 0 then
+      if chatBubble > #chatResponses + 1 then
+        if checkEventsAfterChat == true then
+          checkEvents(currChatNode or hldCurrChatNode, "")
+          hldCurrChatNode = nil
+          checkEventsAfterChat = nil
+        end 	
+      end		
+    else
+        if checkEventsAfterChat == true then
+
+          checkEvents(currChatNode or hldCurrChatNode, "")
+          hldCurrChatNode = nil
+
+--          checkEventsAfterChat = nil
+        end 
+    end
+  end 
 end
