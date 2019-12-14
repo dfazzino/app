@@ -65,6 +65,9 @@ function loadEntities (entitiesSection)
 					if entityWords[2] == "xy" then
 						entity.xy = words[i + 2]
 					end
+					if entityWords[2] == "walkTo" then
+						entity.walkTo = words[i + 2]
+					end          
           if entityWords[2] == "feet" then
 						entity.feet = words[i + 2]
 					end

@@ -139,9 +139,12 @@ function doButtonPress()
         tempName = acteeName
         acteeName = nil
 
-      end
+    end
+      local thisPath
 			-- print(acteeEntity.name)
-			local thisPath = moveToEntity(actorEntity, acteeEntity, tempAction)
+      if acteeEntity.walkTo ~= "false" then
+        thisPath = moveToEntity(actorEntity, acteeEntity, tempAction)
+      end
       if tempName == nil then
       			action = b.action
       else

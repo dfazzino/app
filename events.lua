@@ -318,7 +318,11 @@ function checkEvents (eventType, thisPath)
 			
 			if event.playerAction == eventType and eventType ~= nil then
 				if event.logic ~= nil then
-					checkLogic(event.logic, thisPath .. event.trueactions, nil, event.delete)
+          if thisPath == nil then
+            checkLogic(event.logic, event.trueactions, nil, event.delete)
+          else
+            checkLogic(event.logic, thisPath .. event.trueactions, nil, event.delete)
+          end
 --					checkLogic(event.logic, thisPath .. event.trueactions, thisPath .. event.falseactions, event.delete)
       else
           print("playeraction " .. event.trueactions)

@@ -413,6 +413,7 @@ new entity
 	entity.talkToLocation = 50,50
 	entity.pushLocation = -50,50
 	entity.zimvaLocation = 100,50
+  entity.walkTo = false
 	entity.animation = girlstanding
 	entity.walkRight = girlwalking
 	entity.walkLeft = girlwalkingleft
