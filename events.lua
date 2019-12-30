@@ -334,11 +334,11 @@ function checkEvents (eventType, thisPath)
 			end
 			if event.chatID == eventType then
 				if event.logic ~= nil then
-					checkLogic(event.logic, thisPath .. event.trueactions,nil, event.delete)
+					checkLogic(event.logic, thisPath or "" .. event.trueactions,nil, event.delete)
 --					checkLogic(event.logic, thisPath .. event.trueactions,event.falseactions, event.delete)
 				else
           print("chat action " .. event.trueactions)
-					chatnode = doAction(thisPath .. event.trueactions)
+					chatnode = doAction(thisPath or "" .. event.trueactions)
 					if event.delete == true then event.deleted = true end
 
 				end			

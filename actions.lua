@@ -126,14 +126,17 @@ end
 
 
 function performAction(action)
+  addGameOutputLine(action)
 	action = trim(action)
 		if action ~= nil then
 			local actionWords = action:split(" ") 
 			local actionWord1 = trim(actionWords[1])
-			local actionWord2 =  UserValues2(trim(actionWords[2]))
+			local actionWord2 =  UserValues2(trim(actionWords[2] or ""))
 			local actionWord3 = trim(actionWords[3] or "")
+			if queueActions ~= nil then 
 			if queueActions.actions ~= nil then 
 				addActionToQueue(string.sub(queueActions.actions, 1, -2), actionWords)
+			end
 			end
 			
 			if actionWord1 == "start" and actionWord2 == "chat" then
@@ -167,7 +170,17 @@ function performAction(action)
       if (actionWord1:includes("changeAnimation")) then
         entityCommand(actionWord1,actionWord2,actionWord3)
       end			
-    
+      if (actionWord1 == "show") then
+          if (actionWord2 == "scene") then 
+            showscene(actionWord3)
+          end
+          if (actionWord2 == "event") then
+              showEvent(actionWord3)
+          end
+      end
+      if (actionWord1 == "toggle" and actionWord2 == "console") then
+          consolemode = not consolemode
+      end
 		end	
 
 end

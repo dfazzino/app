@@ -169,7 +169,11 @@ end
 function keyDownLogic(key)
 
     -- if not imgui.GetWantCaptureKeyboard() then
-		return keyboard.isDown(key)
+    if consolestate ~= "active" then
+      return keyboard.isDown(key)
+    else
+      return false
+    end
 	-- end
 end
 

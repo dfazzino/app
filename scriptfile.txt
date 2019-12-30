@@ -344,7 +344,7 @@ add
 
 new event as always	
 	event.name = start
-	event.logic = var|start5 is 0
+	event.logic = var|start is 0
 	event.actions = start chat startGame then loadScene firstscene then set start 1 
 add
 

@@ -76,7 +76,7 @@ Starting to add events!
 ------------------------------------------------------------------
 ~~~event18  start~~
 	always
-		if  var|start5 is 0 [13]
+		if  var|start is 0 [13]
 		 start chat startGame then loadScene firstscene then set start 1
 ------------------------------------------------------------------
 ~~~event19  loadSecondScene~~

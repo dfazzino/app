@@ -4,6 +4,7 @@ require 'logic'
 require 'variables'
 require 'entities'
 require 'art'
+require 'console'
 require 'utility'
 require 'fileutility'	
 require 'scenes'	
@@ -18,6 +19,10 @@ xml2lua = require ('xml2lua')
 push = require "push" --require the library
 
 function love.load()
+  consolemode = true
+  valueTable = {}
+  valueTable.value = ""
+  
  love.window.setMode(800, 600, {resizable=true, vsync=false, minwidth=400, minheight=300})
  
  push:setupScreen(800, 600, 800, 600, {fullscreen = false, resizable = true})
@@ -141,6 +146,9 @@ end
 
 function love.keypressed(key,scancode, isrepeat)
 	absord = nk.keypressed(key, scancode, isrepeat)
+  if key == "return" and consolestate == "active" then
+    absorbed = true
+  end
 	if absord ~= true then
 		UI.keypressed = key
         -- Pass event to the game
@@ -149,12 +157,33 @@ end
 
 
 function love.keyreleased(key,scancode, isrepeat)
- nk.keyreleased(key, scancode)
+  absorbed = nk.keyreleased(key, scancode)
+  if absorbed ~= true then
     	UI.keyreleased = key
 		checkEvents("keyreleased")
 --	if key == "f12" then love.system.openURL( "http://localhost:8000" ) end
-	if key == "f4" then loadScriptURL() end
+    if key == "f4" then loadScriptURL() end
+    if key == "f12" then performAction("toggle console") end
+else
+  if key == "return" and consolestate == "active" then
+    absorbed = true 
+    if valueTable.value:includes("action: ") then
+      valueTable.value = string.gsub(valueTable.value, "action: ", "")
+
+      performAction(valueTable.value)
     
+    elseif valueTable.value:includes("event: ") then
+      valueTable.value = string.gsub(valueTable.value, "event: ", "")
+      checkEvents(valueTable.value)
+      valueTable.value = ""
+    
+    else 
+      performAction(valueTable.value)
+    end
+    addGameOutputLine(valueTable.value)
+    valueTable.value = ""
+  end
+  end
 end
 
 function love.wheelmoved(x, y)
@@ -162,7 +191,8 @@ function love.wheelmoved(x, y)
     end
 
 function love.textinput(t)
-nk.textinput(t)
+absorbed = nk.textinput(t)
+
 end
 
 function love.mousereleased(x, y, button, istouch)
@@ -216,6 +246,21 @@ function love.update(dt)
 	updateAnimate(dt)
 	drawChat()
 	updateXYtoFlux()
+  open = nk.windowBegin("test", 10,550, 750,40)
+  nk.layoutRow('dynamic', 40, 1)
+--  nk.checkbox("check me bitch!", true)
+  consolestate, changed = nk.edit("simple", valueTable)
+  if changed == true then
+    print(state)
+  end 
+  nk.windowEnd()
+  if consolemode == true then
+    newopen = nk.windowBegin("secondwindow", 10,10, 750,500)
+    nk.layoutRow('dynamic', 40, 1)
+
+    nk.label(gameOutput)
+    nk.windowEnd()
+  end
 	nk.frameEnd()
 	for i, animation in pairs(animations)  do
     animation.animation:update(dt)
@@ -223,13 +268,15 @@ function love.update(dt)
 end
 
 function love.draw()
-   push:start()
-  drawBackground()
-	drawUI()
-	drawEntities()
-	drawBubbles()
-	drawInformation()
-	nk.draw()
+  push:start()
+  if consolemode ~= true then
+    drawBackground()
+    drawUI()
+    drawEntities()
+    drawBubbles()
+    drawInformation()
+  end
+  nk.draw()
   push:finish()
 --  drawImages()
 
